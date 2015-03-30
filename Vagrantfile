@@ -37,7 +37,8 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "src", "/vagrant_data"
+  config.vm.synced_folder "src", "/vagrant_src"
+  config.vm.synced_folder "tools", "/vagrant_tools"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -61,8 +62,13 @@ Vagrant.configure(2) do |config|
   end
   
   config.vm.provision "shell", inline: <<-SHELL
-#  cd /vagrant_data; 
-#  chmod +x setup_leads.sh;
-#  ./setup_leads.sh 
+  apt-get update
+  apt-get install -qq unzip
+  apt-get install python-pip
+  apt-get install python-dev
+  pip install virtualenv
+  cd /vagrant_src; 
+  chmod +x setup_leads.sh;
+  ./setup_leads.sh 
   SHELL
 end

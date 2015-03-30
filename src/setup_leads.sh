@@ -1,4 +1,7 @@
 #!/bin/bash
+set -o nounset
+set -o errexit
+
 download(){
     local url=$1
     echo -n "    "
@@ -56,11 +59,11 @@ echo "***********************"
 echo 'Getting bootStrapper and config'
 echo "***********************"
 download ${download_domain}bootstrap.zip 
-unzip bootstrap.zip
+unzip -o bootstrap.zip
 cp -R conf/boot-conf /tmp/
 
 
-mkdir zips 
+mkdir -p zips 
 cd zips
 
 echo "***********************"
@@ -91,7 +94,7 @@ do
 	# Create the directory
 	rm -rf ~/.vertx_mods/$dirname
 	echo -n " Recreating directory, "
-	mkdir ~/.vertx_mods/$dirname
+	mkdir -p ~/.vertx_mods/$dirname
 
 	sleep 0.1
 	# Unzip the zip file from newly created directory
