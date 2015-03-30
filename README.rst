@@ -10,7 +10,20 @@ More details: TODO put link to a publication.
 Scenarios
 ==============
 
+Initial deployment
+----------------------
+
 TODO 
+
+- name deployments
+  
+- import openrc
+  
+- define cnfiguration of the engine 
+  
+- 1) deploy VMs
+- 2) grab config
+- 3) fire configuration
 
 
 How to use it 
@@ -19,10 +32,27 @@ How to use it
 TODO
 
 
+Weapon of choise
+========================
+
+- salt
+
 Development
 ==============================
 
 TODO
+
+
+Testing
+------------
+
+Creating a node locally on dev machine:
+
+::
+
+  vagrant up
+
+
 
 
 Resources
