@@ -76,6 +76,6 @@ Vagrant.configure(2) do |config|
   sudo apt-get install -qq unzip python-pip python-dev libffi-dev libssl-dev python-virtualenv
   cd /vagrant_src; 
   chmod +x setup_leads.sh;
-  ./setup_leads.sh 
+  #{START_ENGINE} | ./setup_leads.sh 
   SHELL
 end
