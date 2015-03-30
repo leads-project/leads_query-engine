@@ -64,8 +64,10 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
   apt-get update
   apt-get install -qq unzip
-  apt-get install python-pip
-  apt-get install python-dev
+  apt-get install -qq python-pip
+  apt-get install -qq python-dev
+  apt-get install -qq libffi-dev
+  apt-get install -qq libssl-dev
   pip install virtualenv
   cd /vagrant_src; 
   chmod +x setup_leads.sh;

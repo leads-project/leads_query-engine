@@ -1,3 +1,6 @@
 python-keystoneclient==1.2.0
 python-novaclient==2.20.0
 python-swiftclient==2.3.1
+ndg-httpsclient
+pyopenssl
+pyasn1

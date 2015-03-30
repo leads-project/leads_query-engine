@@ -1,5 +1,5 @@
 LEADS_QUERY_ENGINE_CONTAINER_NAME=query_engine
-TENANT_NAME=
+_HOW_MANY_UPLOAD_IN_PARALLEL=3
 
 create_local_node:
 	vagrant up
@@ -14,6 +14,12 @@ install_openstck_cli:
 
 upload_zips_to_container:
 	vagrant ssh -c "source ~/tools/openstack_cli/bin/activate; \
-	swift --os-auth-url=$${OS_AUTH_URL} \
-	--os-username=$${OS_USERNAME} --os-password=$${OS_PASSWORD} --os-tenant-name=$${OS_TENANT_NAME} list"
+	cd zips;\
+	find * -name '*.zip' -type f | xargs -I {} -P $(_HOW_MANY_UPLOAD_IN_PARALLEL) \
+	  swift \
+	    --os-auth-url=$${OS_AUTH_URL} \
+	    --os-username=$${OS_USERNAME} \
+	    --os-password=$${OS_PASSWORD} \
+	    --os-tenant-name=$${OS_TENANT_NAME} \
+	    upload --skip-identical --changed $(LEADS_QUERY_ENGINE_CONTAINER_NAME) {}"
 
