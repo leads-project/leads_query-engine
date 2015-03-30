@@ -128,7 +128,7 @@ done
 
 cd ..
 while true; do
-    read -p "Do you wish to run the engine? " yn
+    yn=${LEADS_QUERY_ENGINE_START}
     case $yn in
         [Yy]* ) sh ./start_engine.sh;
 		break;;

@@ -70,12 +70,13 @@ Vagrant.configure(2) do |config|
   export OS_USERNAME=#{ENV['OS_USERNAME']}
   export OS_PASSWORD=#{ENV['OS_PASSWORD']}
   export LEADS_QUERY_ENGINE_CONTAINER_NAME=query_engine
+  export LEADS_QUERY_ENGINE_START=#{START_ENGINE}
   
   #{cmd_setup_os_cli}
   sudo apt-get update
   sudo apt-get install -qq unzip python-pip python-dev libffi-dev libssl-dev python-virtualenv
   cd /vagrant_src; 
   chmod +x setup_leads.sh;
-  #{START_ENGINE} | ./setup_leads.sh 
+  ./setup_leads.sh 
   SHELL
 end
