@@ -43,6 +43,18 @@ Development
 TODO
 
 
+Tools 
+----------
+
+Testing in Virtualbox:
+
+- VirtualBox (https://www.virtualbox.org/ )
+- Vagrant (https://www.vagrantup.com/) 
+
+Openstack CLI (optional, you can use it inside VirtuaBox):
+
+- virtualenv
+
 Testing
 ------------
 

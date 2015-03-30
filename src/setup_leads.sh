@@ -1,6 +1,7 @@
 #!/bin/bash
 set -o nounset
 set -o errexit
+set +x
 
 download(){
     local url=$1
@@ -11,8 +12,22 @@ download(){
     echo "Done"
 }
 
+download_swift(){
+    swift \
+      --os-auth-url=${OS_AUTH_URL} \
+      --os-username=${OS_USERNAME} \
+      --os-password=${OS_PASSWORD} \
+      --os-tenant-name=${OS_TENANT_NAME} \
+      download ${LEADS_QUERY_ENGINE_CONTAINER_NAME} $1 --skip-identical
+    echo "Done"
+}
+
 vertx_version=vert.x-2.1.5
 path_to_install_vertx=~/bin/
+container_name=query_engine
+
+
+
 download_domain=http://www.softnet.tuc.gr/~leads/
 
 cd ~
@@ -53,14 +68,15 @@ fi
 echo "***********************"
 echo 'Downloading files list'
 echo "***********************"
-download ${download_domain}zips/files.list
+download_swift files.list
 
 echo "***********************"
 echo 'Getting bootStrapper and config'
 echo "***********************"
-download ${download_domain}bootstrap.zip 
+download_swift bootstrap.zip 
 unzip -o bootstrap.zip
-cp -R conf/boot-conf /tmp/
+mkdir -p ~/tmp/
+cp -R conf/boot-conf ~/tmp/
 
 
 mkdir -p zips 
@@ -69,11 +85,19 @@ cd zips
 echo "***********************"
 echo 'Downloading modules'
 echo "***********************"
-for next in `cat ../files.list`
-do
-    echo "Getting $next from ${download_domain}zips/" 
-    download ${download_domain}zips/$next
-done
+
+cat ../files.list | xargs -I {} -P 6    swift \
+      --os-auth-url=${OS_AUTH_URL} \
+      --os-username=${OS_USERNAME} \
+      --os-password=${OS_PASSWORD} \
+      --os-tenant-name=${OS_TENANT_NAME} \
+      download ${LEADS_QUERY_ENGINE_CONTAINER_NAME} {} --skip-identical
+
+#for next in `cat ../files.list`
+#do
+#    echo "Getting $next from container" 
+#    download_swift $next
+#done
 
 echo "***********************"
 echo 'Decompressing modules'
@@ -104,7 +128,7 @@ done
 
 cd ..
 while true; do
-    read -p "Do you wish to run the engine? " yn
+    yn=${LEADS_QUERY_ENGINE_START}
     case $yn in
         [Yy]* ) sh ./start_engine.sh;
 		break;;
