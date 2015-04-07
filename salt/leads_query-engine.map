@@ -1,0 +1,12 @@
+saltmaster_hamm5:
+    - leads_saltmaster
+
+ubuntu_large_hamm5:        
+    - leads_qe1
+
+ubuntu_large_hamm6:
+    - leads_qe2
+
+ubuntu_large_dresden2:
+    - leads_qe3
+

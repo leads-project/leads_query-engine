@@ -57,7 +57,7 @@ Basic functionality
   ::
 
     # creating new leads cluster salt-master
-    sudo salt-cloud -c salt  -p leads_saltmaster leads_saltmaster -l debug
+    sudo salt-cloud -c salt  -p saltmaster_hamm5 leads_saltmaster -l debug
 
 Setup Cluster
 ------------------------
@@ -66,15 +66,13 @@ Setup Cluster
 
   ::
     
-    sudo salt-cloud -c salt  -p leads_saltmaster leads_saltmaster -l debug
+    sudo salt-cloud -c salt  -p saltmaster_hamm5 leads_saltmaster -l debug
 
 2. Create nodes 3 nodes (**Notice**: will be replace by map file):
  
   ::
 
-    for i in {1..3}; do 
-        sudo salt-cloud -c salt  -p leads_qe$i leads_qe$i -l debug;
-    done
+    sudo salt-cloud -c salt -m salt/leads_query-engine.map
    
 
 
