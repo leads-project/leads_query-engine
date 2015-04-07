@@ -57,7 +57,7 @@ Basic functionality
   ::
 
     # creating new leads cluster salt-master
-    sudo salt-cloud -c .  -p leads_saltmaster leads_saltmaster -l debug
+    sudo salt-cloud -c salt  -p leads_saltmaster leads_saltmaster -l debug
 
 Setup Cluster
 ------------------------
