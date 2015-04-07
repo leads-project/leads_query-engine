@@ -15,6 +15,14 @@ dev_virtualenv_install_packages:
 dev_virtualenv_printname:
 	@echo workon $(_VIRT_ENV_NAME)
 
+
+deploy_generate_openstack_config:
+	python tools/salt/prepare_provider_conf.py
+
+deploy_import_leads_deploy_ssh_key:
+	nova keypair-add --pub_key ~/.ssh/leads_cluster.pub leads_cluster || nova keypair-list
+
+
 test_vagrant_create_local_node:
 	vagrant up
 
