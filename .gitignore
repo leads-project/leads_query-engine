@@ -1,4 +1,4 @@
 .vagrant/*
 tmp/*
 *.pdf
-salt/cloud.providers.d/*.config
+salt/cloud.providers.d/*.conf
