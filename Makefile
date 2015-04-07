@@ -1,11 +1,21 @@
 LEADS_QUERY_ENGINE_CONTAINER_NAME=query_engine
 _HOW_MANY_UPLOAD_IN_PARALLEL=3
+_VIRT_ENV_NAME=leads_query_engine
 
-create_local_node:
+
+dev_virtualenv_create:
+	bash -c ". $$(which virtualenvwrapper.sh); mkvirtualenv $(_VIRT_ENV_NAME);"
+
+dev_virtualenv_install_packages:
+	bash -c ". $$(which virtualenvwrapper.sh) ; \
+	workon $(_VIRT_ENV_NAME) ; \
+	pip install -U -r requirements.txt ;" \
+	echo "Use: workon $(_VIRT_ENV_NAME)" ;
+
+test_vagrant_create_local_node:
 	vagrant up
 
-
-install_openstck_cli:
+test_vagrant_install_openstck_cli:
 	vagrant ssh -c "mkdir -p ~/tools"; \
 	vagrant ssh -c "set +x; cd ~/tools; virtualenv openstack_cli; \
 	source openstack_cli/bin/activate;\
