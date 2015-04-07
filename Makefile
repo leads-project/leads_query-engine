@@ -12,6 +12,9 @@ dev_virtualenv_install_packages:
 	pip install -U -r requirements.txt ;" \
 	echo "Use: workon $(_VIRT_ENV_NAME)" ;
 
+dev_virtualenv_printname:
+	@echo workon $(_VIRT_ENV_NAME)
+
 test_vagrant_create_local_node:
 	vagrant up
 
