@@ -20,13 +20,13 @@ cah-dresden2:
   tenant: LEADS
   ssh_key_name: leads_cluster
   provider: openstack
-  ssh_key_file: /home/{{env['USER']}}/.ssh/leads_cluster
+  ssh_key_file: {{env['HOME']}}/.ssh/leads_cluster
 
   # skip SSL certificate validation (default false)
   insecure: false
-  networks:
-    - fixed:
-      - a77c7a84-4025-47c2-81e1-c52bf627fae5
-    - floating:
-      - 2053cdba-fb77-48dc-905d-e1a72e7ea18c
-
+  # networks:
+  #  - fixed:
+  #    - a77c7a84-4025-47c2-81e1-c52bf627fae5
+  #  - floating:
+  #    - 2053cdba-fb77-48dc-905d-e1a72e7ea18c
+  config_drive: true

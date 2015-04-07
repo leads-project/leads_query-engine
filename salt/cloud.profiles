@@ -1,0 +1,31 @@
+leads_saltmaster:
+    make_master: True
+    provider: cah-hamm5
+    ssh_username: ubuntu
+    size: cloudcompute.l
+    image: Ubuntu 14.04 LTS x64
+    ssh_key_name: leads_cluster
+
+leads_qe1:
+    provider: cah-hamm5
+    ssh_username: ubuntu
+    size: cloudcompute.l
+    image: Ubuntu 14.04 LTS x64
+    private_networking: False
+    ssh_key_name: leads_cluster
+
+leads_qe2:
+    provider: cah-hamm6
+    ssh_username: ubuntu
+    size: cloudcompute.l
+    image: Ubuntu 14.04 LTS x64
+    private_networking: False
+    ssh_key_name: leads_cluster
+
+leads_qe3:
+    provider: cah-dresden2
+    ssh_username: ubuntu
+    size: cloudcompute.l
+    image: Ubuntu 14.04 LTS x64
+    private_networking: False
+    ssh_key_name: leads_cluster
