@@ -2,7 +2,7 @@ cah-hamm6:
   # Set the location of the salt-master
   #
   minion:
-    master:
+    master: 5.147.254.183
 
   # Configure the OpenStack driver
   #
