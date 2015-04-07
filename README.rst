@@ -59,6 +59,26 @@ Basic functionality
     # creating new leads cluster salt-master
     sudo salt-cloud -c .  -p leads_saltmaster leads_saltmaster -l debug
 
+Setup Cluster
+------------------------
+
+1. Create a salt-master:
+
+  ::
+    
+    sudo salt-cloud -c salt  -p leads_saltmaster leads_saltmaster -l debug
+
+2. Create nodes 3 nodes (**Notice**: will be replace by map file):
+ 
+  ::
+
+    for i in {1..3}; do 
+        sudo salt-cloud -c salt  -p leads_qe$i leads_qe$i -l debug;
+    done
+   
+
+
+
 Development
 ================
 
