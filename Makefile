@@ -25,9 +25,6 @@ deploy_import_leads_deploy_ssh_key:
 list_ucloud:
 	sudo  salt-cloud -c salt --list-providers
 
-list_images_hamm5:
-	$(MAKE) list_images TARGET_UCLOUD='cah-hamm5' ;
-
 list_images: 
 	sudo  salt-cloud -c salt --list-sizes $(TARGET_UCLOUD)
 
