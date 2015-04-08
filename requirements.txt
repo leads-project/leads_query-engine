@@ -1,6 +1,10 @@
 salt
 apache-libcloud
 salt-cloud
+M2Crypto
+pycrypto
+msgpack-python
+pyzmq
 python-keystoneclient==1.2.0
 python-novaclient==2.20.0
 python-swiftclient==2.3.1

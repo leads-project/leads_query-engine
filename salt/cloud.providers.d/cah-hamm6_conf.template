@@ -1,0 +1,32 @@
+cah-hamm6:
+  # Set the location of the salt-master
+  #
+  minion:
+    master: 5.147.254.183
+
+  # Configure the OpenStack driver
+  #
+  identity_url: https://identity-hamm6.cloudandheat.com:5000/v2.0/tokens
+  compute_name: nova
+  protocol: ipv4
+
+  compute_region: RegionOne
+
+  # Configure Openstack authentication credentials
+  #
+  user: {{env['OS_USERNAME']}}
+  password: {{ env['OS_PASSWORD']}}
+  # tenant is the project name
+  tenant: LEADS
+  ssh_key_name: leads_cluster
+  provider: openstack
+  ssh_key_file: {{env['HOME']}}/.ssh/leads_cluster
+
+  # skip SSL certificate validation (default false)
+  insecure: false
+  # networks:
+  #  - fixed:
+  #    - a77c7a84-4025-47c2-81e1-c52bf627fae5
+  #  - floating:
+  #    - 2053cdba-fb77-48dc-905d-e1a72e7ea18c
+  config_drive: true
