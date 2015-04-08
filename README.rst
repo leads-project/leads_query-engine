@@ -36,6 +36,22 @@ Basic setup
 
     make deploy_saltstack_generate_config
 
+Prepare micro-cloud
+-----------------------
+
+1. Import the shared project ssh key:
+
+  ::
+
+    make deploy_create_salt_security_group
+
+
+2. Create basic groups (for saltstack communication)
+   
+  ::
+
+    make deploy_import_leads_deploy_ssh_key
+
 Basic functionality
 ------------------------------
 
