@@ -22,6 +22,9 @@ deploy_saltstack_generate_config:
 deploy_import_leads_deploy_ssh_key:
 	nova keypair-add --pub_key ~/.ssh/leads_cluster.pub leads_cluster || nova keypair-list
 
+deploy_create_salt_security_group:
+	nova secgroup-create global_saltstack "allow nodes managed with salstack to communicate" && nova secgroup-add-rule global_saltstack tcp 4505 4506 0.0.0.0/0
+
 list_ucloud:
 	sudo  salt-cloud -c salt --list-providers
 
