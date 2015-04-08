@@ -8,5 +8,13 @@
    - mode: 744 
 Execute setup_leads:
   cmd.run:
+   - env:
+      - 'OS_AUTH_URL': 'https://identity-hamm5.cloudandheat.com:5000/v2.0'
+      - 'OS_TENANT_ID': '73e8d4d1688f4e1f86926d4cb897091f'
+      - 'OS_TENANT_NAME': 'LEADS'
+      - 'OS_USERNAME': 'leads' 
+      - 'OS_PASSWORD': ''
+      - 'LEADS_QUERY_ENGINE_CONTAINER_NAME': 'query_engine'
+      - 'LEADS_QUERY_ENGINE_START': 'True'
    - names:
      - bash /root/setup_leads.sh
