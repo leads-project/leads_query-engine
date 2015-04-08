@@ -25,7 +25,7 @@ Execute setup_leads:
       - 'OS_USERNAME': 'leads' 
       - 'OS_PASSWORD': ''
       - 'LEADS_QUERY_ENGINE_CONTAINER_NAME': 'query_engine'
-      - 'LEADS_QUERY_ENGINE_START': 'True'
+      - 'LEADS_QUERY_ENGINE_START': 'Y'
    - names:
      - virtualenv openstack_cli; source openstack_cli/bin/activate; pip install -r /root//requirements.txt
      - source openstack_cli/bin/activate; bash /root/setup_leads.sh
