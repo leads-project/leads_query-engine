@@ -5,6 +5,7 @@ saltmaster_hamm5:
     size: cloudcompute.l
     image: Ubuntu 14.04 LTS x64
     ssh_key_name: leads_cluster
+    security_groups: default,global_saltstack
 
 ubuntu_large_hamm5:
     provider: cah-hamm5
@@ -12,14 +13,7 @@ ubuntu_large_hamm5:
     size: cloudcompute.l
     image: Ubuntu 14.04 LTS x64
     ssh_key_name: leads_cluster
-
-ubuntu_large_hamm5:
-    provider: cah-hamm5
-    ssh_username: ubuntu
-    size: cloudcompute.l
-    image: Ubuntu 14.04 LTS x64
-    private_networking: False
-    ssh_key_name: leads_cluster
+    security_groups: default,global_saltstack
 
 ubuntu_large_hamm6:
     provider: cah-hamm6
@@ -28,6 +22,7 @@ ubuntu_large_hamm6:
     image: Ubuntu 14.04 LTS x64
     private_networking: False
     ssh_key_name: leads_cluster
+    security_groups: default,global_saltstack
 
 ubuntu_large_dresden2:
     provider: cah-dresden2
@@ -36,3 +31,4 @@ ubuntu_large_dresden2:
     image: Ubuntu 14.04 LTS x64
     private_networking: False
     ssh_key_name: leads_cluster
+    security_groups: default,global_saltstack
