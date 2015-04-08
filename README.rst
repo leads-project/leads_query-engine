@@ -90,8 +90,23 @@ Setup Cluster
 
     sudo salt-cloud -c salt -m salt/leads_query-engine.map
    
+Provision
+--------------
 
+1. Login to the leads-saltmaster
 
+2. Copy the content of salt/salt_master/srv_salt to /srv/salt
+
+3. Setup *OS_PASSWORD* in */srv/salt/salt/leads/setup_script.sls*
+  
+4. Provision the nodes:
+   
+  ::
+
+    salt 'leads-qe1' state.highstate -l debug
+    salt 'leads-qe2' state.highstate -l debug
+    salt 'leads-qe3' state.highstate -l debug
+   
 
 Development
 ================
