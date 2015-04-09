@@ -17,7 +17,7 @@ ubuntu_large_hamm5:
 
 ubuntu_large_hamm5_yarn: 
     extends: ubuntu_large_hamm5
-    security_groups: internal_yarn,default,global_saltstack
+    security_groups: default,global_saltstack,internal_yarn
 
 ubuntu_large_hamm6:
     provider: cah-hamm6
