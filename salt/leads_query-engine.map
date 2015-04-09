@@ -1,6 +1,3 @@
-saltmaster_hamm5:
-    - leads-saltmaster
-
 ubuntu_large_hamm5:        
     - leads-qe1
 
