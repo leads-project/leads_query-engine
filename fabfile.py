@@ -153,10 +153,15 @@ def _hadoop_change_yarn_site(hadoop_home, master):
     content = """
 <configuration>
     <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>{0}</value>
+        <description>The hostname of the ResourceManager</description>
+    </property>
+    <property>
         <name>yarn.nodemanager.aux-services</name>
         <value>mapreduce_shuffle</value>
     </property>
-</configuration>"""
+</configuration>""".format(master)
 
     with cd(hadoop_home + '/etc/hadoop/'):
         run("rm -f {0}; touch {0}".format(filename))
