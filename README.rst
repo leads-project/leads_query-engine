@@ -172,6 +172,7 @@ On you workstation with fabric, after completing provisioning with salt.
       ssh  -L  8088:<private ip>:8088 -L 50075:127.0.0.1:50075 leads-yarn-1 \
          -i ~/.ssh/leads_cluster
          -F ssh_config
+
   -  connect with your web browser to *http://127.0.0.1:8088/cluster/nodes*
 
 Development
