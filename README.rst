@@ -140,7 +140,21 @@ Provision
 
      salt 'leads-yarn*' state.highstate -l debug
 
-   
+YARN (in migration to salt)
+-------------------------------
+
+On you workstation with fabric, after completing provisioning with salt.
+
+1. Fill the missing IPs in ssh_config_tmp and save it to ssh_config.
+
+2. Provision the nodes. Install and configure YARN on the nodes pre-provision by salt:
+
+  ::
+
+    fab -H leads-yarn-1,leads-yarn-2,leads-yarn-2\
+         prepare_hadoop --ssh-config-path=ssh_config
+
+3. With fabric, you can start and stop YARN, also you can format hdfs
 
 Development
 ================
