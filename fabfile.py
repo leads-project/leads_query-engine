@@ -337,9 +337,3 @@ def hadoop_format():
                            HADOOP_PREFIX=hadoop_home):
                 run('echo "Y" | bin/hdfs namenode -format')
                 run('bin/hdfs datanode -regular')
-
-
-def _upload_with_scp(what, where):
-    with hide('running', 'stdout'):
-        local("scp -F {0} {1} {2}:{3}".format(env.ssh_config_path, what, env.host_string, where))
-
