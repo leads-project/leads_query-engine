@@ -3,3 +3,4 @@ tmp/*
 *.pdf
 salt/cloud.providers.d/*.conf
 *.pyc
+ssh_config

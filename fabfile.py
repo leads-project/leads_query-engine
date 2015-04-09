@@ -33,6 +33,8 @@ hadoop_hosts_file = {
     "10.105.0.47": "leads-yarn-3"
 }
 
+hadoop_home_dir = "/home/ubuntu/{0}".format("hadoop-2.5.2")
+
 
 # fabric roles works only on env.host
 # for us it is simplier to use env.host_string
@@ -52,8 +54,7 @@ def roles_host_string_based(*args):
 @roles_host_string_based('masters', 'slaves')
 @parallel
 def prepare_hadoop():
-
-    hadoop_home = "/home/ubuntu/{0}".format("hadoop-2.5.2")
+    hadoop_home = hadoop_home_dir
     _hadoop_configure(hadoop_home)
 
 
@@ -233,29 +234,29 @@ def _hadoop_prepare_etc_host(ip_to_hosts):
 @roles_host_string_based('masters', 'slaves')
 @serial
 def start_hadoop_service():
+    hadoop_home = hadoop_home_dir
     """
     Hadoop: start service
     """
-    _hadoop_command_namenode("start")
-    _hadoop_command_datanode("start")
-    _hadoop_command_resource_mgmt("start")
-    _hadoop_command_node_manager("start")
+    _hadoop_command_namenode(hadoop_home, "start")
+    _hadoop_command_datanode(hadoop_home, "start")
+    _hadoop_command_resource_mgmt(hadoop_home, "start")
+    _hadoop_command_node_manager(hadoop_home, "start")
 
 
-def _command_hadoop_service(command):
-    hadoop_home = _get_hadoop_home()
+def _command_hadoop_service(hadoop_home, command):
     with cd(hadoop_home):
-            run("./sbin/{0}-yarn.sh".format(action))
+            run("./sbin/{0}-yarn.sh".format(command))
 
 
 @roles_host_string_based('masters')
-def _hadoop_command_namenode(action):
-    _execute_hadoop_command('$HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR'
+def _hadoop_command_namenode(hadoop_home, action):
+    _execute_hadoop_command(hadoop_home,
+                            '$HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR'
                             ' --script hdfs ' + action + ' namenode')
 
 
-def _execute_hadoop_command(cmd):
-    hadoop_home = _get_hadoop_home()
+def _execute_hadoop_command(hadoop_home, cmd):
 
     with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64',
                    HADOOP_PREFIX=hadoop_home,
@@ -265,20 +266,21 @@ def _execute_hadoop_command(cmd):
 
 
 @roles_host_string_based('masters')
-def _hadoop_command_datanode(action):
-    _execute_hadoop_command('$HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR'
+def _hadoop_command_datanode(hadoop_home, action):
+    _execute_hadoop_command(hadoop_home,
+                            '$HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR'
                             ' --script hdfs ' + action + ' datanode')
 
 
 @roles_host_string_based('masters')
-def _hadoop_command_resource_mgmt(action):
-    _execute_hadoop_command('$HADOOP_YARN_HOME/sbin/yarn-daemon.sh'
+def _hadoop_command_resource_mgmt(hadoop_home, action):
+    _execute_hadoop_command(hadoop_home, '$HADOOP_YARN_HOME/sbin/yarn-daemon.sh'
                             ' --config $HADOOP_CONF_DIR ' + action + ' resourcemanager')
 
 
 @roles_host_string_based('masters', 'slaves')
-def _hadoop_command_node_manager(action):
-    _execute_hadoop_command('$HADOOP_YARN_HOME/sbin/yarn-daemon.sh'
+def _hadoop_command_node_manager(hadoop_home, action):
+    _execute_hadoop_command(hadoop_home, '$HADOOP_YARN_HOME/sbin/yarn-daemon.sh'
                             ' --config $HADOOP_CONF_DIR ' + action + ' nodemanager')
 
 
@@ -287,15 +289,16 @@ def stop_hadoop_service():
     """
     Hadoop: stop service
     """
-    _hadoop_command_namenode("stop")
-    _hadoop_command_datanode("stop")
-    _hadoop_command_resource_mgmt("stop")
-    _hadoop_command_node_manager("stop")
+    hadoop_home = hadoop_home_dir
+    _hadoop_command_namenode(hadoop_home, "stop")
+    _hadoop_command_datanode(hadoop_home, "stop")
+    _hadoop_command_resource_mgmt(hadoop_home, "stop")
+    _hadoop_command_node_manager(hadoop_home, "stop")
 
 
 @roles_host_string_based('masters')
 def hadoop_format():
-    hadoop_home = _get_hadoop_home()
+    hadoop_home = hadoop_home_dir
 
     with settings(warn_only=True):
         with cd(hadoop_home):
@@ -303,18 +306,3 @@ def hadoop_format():
                            HADOOP_PREFIX=hadoop_home):
                 run('echo "Y" | bin/hdfs namenode -format')
                 run('bin/hdfs datanode -regular')
-
-
-def show_running_leads_clusters():
-    """
-    """
-    x = PrettyTable(["Cluster name", "Node name", "Node UUID"])
-    for inst in os_conn.list_nodes():
-        md = os_conn.ex_get_metadata(inst)
-        if "leads_cluster_name" in md:
-            row = []
-            row.append(md["leads_cluster_name"])
-            row.append(inst.name)
-            row.append(inst.id)
-            x.add_row(row)
-    print x
