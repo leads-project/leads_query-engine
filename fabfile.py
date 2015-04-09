@@ -1,6 +1,6 @@
 from fabric.contrib.files import exists, append, contains
 from fabric.contrib import files
-from fabric.api import run, env, sudo, local, cd, settings
+from fabric.api import run, env, sudo, local, cd, settings, get
 from fabric.api import hide, parallel, roles, hosts, serial
 from fabric.context_managers import shell_env
 from fabric.utils import error
@@ -14,7 +14,7 @@ env.use_ssh_config = True
 
 # infinispan - 54200 and 55200
 # hadoop - 9000 and 9001 and 50070 (NameNode) and 8088 (resourcemanager)
-# cluster_port_communication = ['54200', '55200', '22', '9000', '9001', '50070',
+# cluster_port_communication = ['22', '9000', '9001', '50070',
 #                              '8088', '19888', '10020']
 
 hadoop_master_node_ip = "10.105.0.46"
@@ -233,6 +233,32 @@ def _hadoop_prepare_etc_host(ip_to_hosts):
 
 @roles_host_string_based('masters', 'slaves')
 @serial
+def do_passwordless_access_to_slaves():
+    _get_yarn_master_id_rsa_pub()
+    _append_id_rsa_pub_to_slave()
+
+
+@roles_host_string_based('masters')
+def _get_yarn_master_id_rsa_pub():
+    if not files.exists('~/.ssh/id_rsa'):
+        run("ssh-keygen -t rsa")
+    get('/home/ubuntu/.ssh/id_rsa.pub', 'tmp_yarn_master_id_rsa.pub')
+
+
+@roles_host_string_based('slaves')
+def _append_id_rsa_pub_to_slave():
+    """
+    """
+    auth_keys_file = "~/.ssh/authorized_keys"
+
+    with open('tmp_yarn_master_id_rsa.pub') as f:
+        key = f.read()
+        if not files.contains(auth_keys_file, key):
+            files.append(auth_keys_file, key)
+
+
+@roles_host_string_based('masters', 'slaves')
+@serial
 def start_hadoop_service():
     hadoop_home = hadoop_home_dir
     """
@@ -265,7 +291,7 @@ def _execute_hadoop_command(hadoop_home, cmd):
         run(cmd)
 
 
-@roles_host_string_based('masters')
+@roles_host_string_based('masters', 'slaves')
 def _hadoop_command_datanode(hadoop_home, action):
     _execute_hadoop_command(hadoop_home,
                             '$HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR'
@@ -306,3 +332,9 @@ def hadoop_format():
                            HADOOP_PREFIX=hadoop_home):
                 run('echo "Y" | bin/hdfs namenode -format')
                 run('bin/hdfs datanode -regular')
+
+
+def _upload_with_scp(what, where):
+    with hide('running', 'stdout'):
+        local("scp -F {0} {1} {2}:{3}".format(env.ssh_config_path, what, env.host_string, where))
+
