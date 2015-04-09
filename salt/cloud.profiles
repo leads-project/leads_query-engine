@@ -15,7 +15,7 @@ ubuntu_large_hamm5:
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
 
-ubuntu_large_hamm5_private: 
+ubuntu_large_hamm5_yarn: 
     extends: ubuntu_large_hamm5
     security_groups: internal_yarn,default,global_saltstack
 

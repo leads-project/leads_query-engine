@@ -1,4 +1,4 @@
-ubuntu_large_hamm5_private:
+ubuntu_large_hamm5_yarn:
     - leads-yarn-1
     - leads-yarn-2
     - leads-yarn-3
