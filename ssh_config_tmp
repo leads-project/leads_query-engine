@@ -1,0 +1,14 @@
+Host leads-yarn-1
+    Hostname {}
+    User ubuntu
+    IdentityFile ~/.ssh/leads_cluster
+
+Host leads-yarn-2
+    Hostname {}
+    User ubuntu
+    IdentityFile ~/.ssh/leads_cluster
+
+Host leads-yarn-3
+    Hostname {}
+    User ubuntu
+    IdentityFile ~/.ssh/leads_cluster

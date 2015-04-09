@@ -15,6 +15,10 @@ ubuntu_large_hamm5:
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
 
+ubuntu_large_hamm5_yarn: 
+    extends: ubuntu_large_hamm5
+    security_groups: default,global_saltstack,internal_yarn
+
 ubuntu_large_hamm6:
     provider: cah-hamm6
     ssh_username: ubuntu
