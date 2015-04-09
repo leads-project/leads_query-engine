@@ -16,10 +16,10 @@ Basic setup
 
 1. create a virtualenv (you need to have *virtualenvwrapper* installed)
 
-  ::
+   ::
 
-    make dev_virtual_create
-    make dev_virtual_install_packages
+     make dev_virtual_create
+     make dev_virtual_install_packages
 
 2. Activate the virtualenv:
    
