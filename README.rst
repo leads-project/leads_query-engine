@@ -23,18 +23,18 @@ Basic setup
 
 2. Activate the virtualenv:
    
-  ::
+   ::
 
-    $(make dev_virtualenv_printname)
+     $(make dev_virtualenv_printname)
 
 3. Generate the configuration files with you *OS_USER* and *OS_PASSWORD*
    
-  ::
+   ::
 
-    # source the openstack configuration file
-    source openrc
+     # source the openstack configuration file
+     source openrc
 
-    make deploy_saltstack_generate_config
+     make deploy_saltstack_generate_config
 
 Prepare micro-cloud
 -----------------------
