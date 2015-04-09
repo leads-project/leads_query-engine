@@ -25,6 +25,15 @@ deploy_import_leads_deploy_ssh_key:
 deploy_create_salt_security_group:
 	nova secgroup-create global_saltstack "allow nodes managed with salstack to communicate" && nova secgroup-add-rule global_saltstack tcp 4505 4506 0.0.0.0/0
 
+# hadoop - 9000 and 9001 and 50070 (NameNode) and 8088 (resourcemanager)
+deploy_create_yarn_security_group:
+	nova secgroup-create internal_yarn "allow YARN nodes to communicate";\
+	nova secgroup-add-group-rule internal_yarn internal_yarn tcp 9000 9000 ;\
+	nova secgroup-add-group-rule internal_yarn internal_yarn tcp 9001 9001 ;\
+	nova secgroup-add-group-rule internal_yarn internal_yarn tcp 50070 50070 ;\
+	nova secgroup-add-group-rule internal_yarn internal_yarn tcp 8088 8088 ;
+
+
 list_ucloud:
 	sudo  salt-cloud -c salt --list-providers
 
