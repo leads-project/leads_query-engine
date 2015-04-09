@@ -16,3 +16,9 @@
     - if_missing: /home/ubuntu/hadoop-2.5.2 
     - user: ubuntu
     - group: ubuntu
+/home/ubuntu/hadoop-2.5.2/etc/hadoop/hadoop-env.sh:
+  file.replace:
+   - user: ubuntu
+   - group: ubuntu 
+   - pattern: \#export HADOOP_HEAPSIZE=
+   - repl: export HADOOP_HEAPSIZE=1000 
