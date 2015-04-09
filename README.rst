@@ -151,10 +151,28 @@ On you workstation with fabric, after completing provisioning with salt.
 
   ::
 
-    fab -H leads-yarn-1,leads-yarn-2,leads-yarn-2\
+    fab -H leads-yarn-1,leads-yarn-2,leads-yarn-2 \
          prepare_hadoop --ssh-config-path=ssh_config
 
 3. With fabric, you can start and stop YARN, also you can format hdfs
+  
+4. Simple testing:
+    
+  - run example application:
+  
+    ::
+    
+      fab -H leads-yarn-1  hadoop_run_example_application_pi
+        --ssh-config-path=ssh_config
+
+  - connect to the console:
+    
+    ::
+
+      ssh  -L  8088:<private ip>:8088 -L 50075:127.0.0.1:50075 leads-yarn-1 \
+         -i ~/.ssh/leads_cluster
+         -F ssh_config
+  -  connect with your web browser to *http://127.0.0.1:8088/cluster/nodes*
 
 Development
 ================
