@@ -337,3 +337,12 @@ def hadoop_format():
                            HADOOP_PREFIX=hadoop_home):
                 run('echo "Y" | bin/hdfs namenode -format')
                 run('bin/hdfs datanode -regular')
+
+
+@roles_host_string_based('masters')
+def hadoop_run_example_application_pi():
+    hadoop_home = hadoop_home_dir
+    with cd(hadoop_home):
+        with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'):
+            run('bin/yarn jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.2.jar'
+                ' pi 16 100000')
