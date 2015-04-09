@@ -95,7 +95,28 @@ Setup cluster
   ::
 
      sudo salt-cloud -c salt -m salt/leads_yarn.map   
+
+Prepare salt-master
+---------------------
+
+TODO: move the salt master to git-based back-end. Use hostname for the salt master.
+
+1. Ssh to salt-master (use *--query* subcommand of *salt-cloud* to get the IP)
+
+2. Check whether all minion keys are accepted
    
+   ::
+
+      sudo salt-key -L
+      sudo salt-key -a <minion_name>
+
+3. Copy content of *salt/salt_master/srv_salt* to /srv/salt/
+  
+  ::
+
+    mkdir -p /srv/salt
+    cp -R salt/salt_master/srv_salt/* /srv/salt
+
 Provision
 --------------
 
@@ -105,13 +126,20 @@ Provision
 
 3. Setup *OS_PASSWORD* in */srv/salt/salt/leads/setup_script.sls*
   
-4. Provision the nodes:
+4. Provision the nodes for *query_engine* with infinityspan:
    
   ::
 
     salt 'leads-qe1' state.highstate -l debug
     salt 'leads-qe2' state.highstate -l debug
     salt 'leads-qe3' state.highstate -l debug
+
+5. Provision the nodes for *YARN* and Unicrawler:
+   
+  :: 
+
+     salt 'leads-yarn*' state.highstate -l debug
+
    
 
 Development
