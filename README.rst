@@ -14,7 +14,7 @@ How to use it
 Basic setup
 ----------------
 
-0. (EASIEST then using virtualenv, **skip 2 and 3**) install libraries globally: 
+0. (EASIEST then using virtualenv, **skip 1 and 2**) install libraries globally: 
    
    ::
 
