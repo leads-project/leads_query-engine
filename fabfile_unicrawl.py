@@ -71,7 +71,7 @@ def _run_unicrawler_with(option):
                        YARN_HOME=hadoop_home,
                        HDFS_NAMENODE=hadoop_name_node,
                        NUTCH_DIR=nutch_home):
-            run("export PATH=$PATH:${YARN_HOME}/bin; bash -uex ./bin/dnutch {0}".format(option))
+            run("export PATH=$PATH:${YARN_HOME}/bin; bash -uex ./bin/dnutch " + option)
 
 
 def start_unicrawler():
