@@ -270,7 +270,20 @@ Infinispan (in migration to salt)
 
      make get_swift_tempurl_ispn_archive SWIFT_TEMPURL_KEY=${MY_SECRET_KEY}
 
-2. TODO
+2. Fill the missing IPs in ssh_config_tmp and save it to ssh_config.
+
+3. Check whether you can connect to ispn server:
+   
+   ::
+
+     ssh leads-ispn-1 -F ssh_config
+
+
+4. Provision (still with fabfile):
+   
+   ::
+
+     fab -H leads-ispn-1,leads-ispn-2 install_infinispan --ssh-config ssh_config -f fabfile_ispn.py
 
 
 Development
