@@ -33,6 +33,10 @@ deploy_create_yarn_security_group:
 	nova secgroup-add-group-rule internal_yarn internal_yarn tcp 50070 50070 ;\
 	nova secgroup-add-group-rule internal_yarn internal_yarn tcp 8088 8088 ;
 
+deploy_create_ispn_security_group:
+	nova secgroup-create internal_ispn "allow ISPN nodes to communicate";\
+	nova secgroup-add-group-rule internal_ispn internal_ispn tcp 54200 54200 ;\
+	nova secgroup-add-group-rule internal_ispn internal_ispn tcp 55200 55200 ;
 
 list_ucloud:
 	sudo  salt-cloud -c salt --list-providers
