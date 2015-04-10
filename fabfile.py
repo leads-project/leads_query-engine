@@ -346,3 +346,16 @@ def hadoop_run_example_application_pi():
         with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'):
             run('bin/yarn jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.2.jar'
                 ' pi 16 100000')
+
+
+@roles_host_string_based('masters')
+def hadoop_example_terrasort_gen():
+    hadoop_home = hadoop_home_dir
+    with cd(hadoop_home):
+        with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'):
+            run('bin/yarn jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.2.jar'
+                '  teragen 10000 /tmp/terradata')
+
+
+
+
