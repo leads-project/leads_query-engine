@@ -233,6 +233,7 @@ On you workstation with fabric, after completing provisioning with salt.
 
        ssh  -L 8088:<private ip>:8088 \
             -L 8042:<private ip>:8042 \
+            -L 50070:127.0.0.1:50070 \
             -L 50075:127.0.0.1:50075 leads-yarn-1 \
             -i ~/.ssh/leads_cluster
             -F ssh_config
@@ -260,6 +261,27 @@ Unicrawler
 2. Put the temp_url in *salt/salt_master/srv_salt/leads/unicrawl.cls*. Skip this point, if you have still a valid tempurl.
 
 3. Provision the node (see in /srv/salt/top.sls which node to provision --- now it is the YARN master)
+   
+4. Configure Unicrawler:
+   
+   ::
+
+     fab -H leads-yarn-1 configure_unicrawler \
+     --ssh-config ssh_config -f fabfile_unicrawl.py
+
+5. Setup Unicrawler (prepare hadoop fs):
+   
+   ::
+
+     fab -H leads-yarn-1 setup_unicrawler \
+     --ssh-config ssh_config -f fabfile_unicrawl.py
+
+6. Start Unicrawler:
+
+   ::
+
+     fab -H leads-yarn-1 start_unicrawler \
+     --ssh-config ssh_config -f fabfile_unicrawl.py
 
 Infinispan (in migration to salt)
 ---------------------------------------
