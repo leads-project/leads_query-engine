@@ -6,7 +6,7 @@ from fabric.context_managers import shell_env
 from fabric.utils import error
 import os
 from fabfile_ispn import ispn_hosts_file
-from fabfile import hadoop_home_dir
+from fabfile import hadoop_home_dir, hadoop_master_node_ip
 
 env.forward_agent = True
 env.use_ssh_config = True
@@ -14,6 +14,7 @@ env.use_ssh_config = True
 
 ispn_cluster_ips = ispn_hosts_file.keys()
 nutch_home_dir = "/home/ubuntu/nutch"
+hadoop_name_node = hadoop_master_node_ip
 
 
 @serial
@@ -52,3 +53,24 @@ def setup_unicrawler():
         with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64',
                        YARN_HOME=hadoop_home):
             run("export PATH=$PATH:${YARN_HOME}/bin; ./bin/setup.sh")
+
+
+def start_unicrawler():
+    nutch_home = nutch_home_dir
+    hadoop_home = hadoop_home_dir
+
+    _patch_dnutch_script(nutch_home)
+
+    with cd(nutch_home):
+        with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64',
+                       YARN_HOME=hadoop_home,
+                       HDFS_NAMENODE=hadoop_name_node,
+                       NUTCH_DIR=nutch_home):
+            run("export PATH=$PATH:${YARN_HOME}/bin; bash -uex ./bin/dnutch")
+
+
+def _patch_dnutch_script(nutch_home):
+    filename = "bin/dnutch"
+    with cd(nutch_home):
+        files.comment(filename, 'source "/mnt/cdrom/context.sh"')
+        files.comment(filename, 'export NUTCH_DIR="/opt/nutch"')
