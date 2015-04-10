@@ -124,14 +124,14 @@ def _hadoop_change_core_site(hadoop_home, master_ip):
         <name>hadoop.tmp.dir</name>
         <value>{0}/hdfs</value>
     </property>
-    <property>
+    <!-- property>
         <name>fs.defaultFS</name>
-        <value>hdfs://{1}:9000</value>
-    </property>
+        <value>hdfs://{1}:8020</value>
+    </property -->
 
     <property>
         <name>fs.default.name</name>
-        <value>hdfs://{1}:9000</value>
+        <value>hdfs://{1}:8020</value>
     </property>
 
     <property>

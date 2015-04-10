@@ -53,7 +53,6 @@ def setup_unicrawler():
         with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64',
                        YARN_HOME=hadoop_home):
             run("export PATH=$PATH:${YARN_HOME}/bin; ./bin/setup.sh")
-    perform_inject()
 
 
 def perform_inject():
@@ -84,3 +83,9 @@ def _patch_dnutch_script(nutch_home):
     with cd(nutch_home):
         files.comment(filename, 'source "/mnt/cdrom/context.sh"')
         files.comment(filename, 'export NUTCH_DIR="/opt/nutch"')
+
+
+#
+# ./bin/nutch readdb -dump ~/tmp/dump
+#
+#
