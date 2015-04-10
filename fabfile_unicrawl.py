@@ -53,9 +53,14 @@ def setup_unicrawler():
         with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64',
                        YARN_HOME=hadoop_home):
             run("export PATH=$PATH:${YARN_HOME}/bin; ./bin/setup.sh")
+    perform_inject()
 
 
-def start_unicrawler():
+def perform_inject():
+    _run_unicrawler_with("--inject")
+
+
+def _run_unicrawler_with(option):
     nutch_home = nutch_home_dir
     hadoop_home = hadoop_home_dir
 
@@ -66,7 +71,11 @@ def start_unicrawler():
                        YARN_HOME=hadoop_home,
                        HDFS_NAMENODE=hadoop_name_node,
                        NUTCH_DIR=nutch_home):
-            run("export PATH=$PATH:${YARN_HOME}/bin; bash -uex ./bin/dnutch")
+            run("export PATH=$PATH:${YARN_HOME}/bin; bash -uex ./bin/dnutch {0}".format(option))
+
+
+def start_unicrawler():
+    _run_unicrawler_with("")
 
 
 def _patch_dnutch_script(nutch_home):
