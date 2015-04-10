@@ -75,19 +75,29 @@ list_container:
 	    --os-tenant-name=$${OS_TENANT_NAME} \
 	    list  $(LEADS_QUERY_ENGINE_CONTAINER_NAME)"
 
-# default target
-TARGET_SWIFT_OBJECT=/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/unicrawl/nutch.tgz
+# unicrawl archive
+TARGET_SWIFT_OBJECT_SWIFT=/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/unicrawl/nutch.tgz
+# infinispan archive
+TARGET_SWIFT_OBJECT_ISPN=/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/infinispan/infinispan-server-7.0.1-SNAPSHOT-NEW.tgz
 
 TARGET_SWIFT_ENDPOINT=https://object-hamm5.cloudandheat.com:8080
 
 # default value 30 days
 TARGET_SWIFT_VALIDITY_OF_TEMPURL_SEC=24*60*60*30
 
-get_swift_temp_url_unicrawl_archive:
+get_swift_tempurl_unicrawl_archive: 
+	$(MAKE) get_swift_tempurl TARGET_SWIFT_OBJECT=$(TARGET_SWIFT_OBJECT_SWIFT)
+
+get_swift_tempurl:
 	if test '$(SWIFT_TEMPURL_KEY)' = ""; then echo "SWIFT_TEMPURL_KEY must be set"; exit 1; fi; \
 	unset OS_TENANT_ID ; \
 	swift post -m "Temp-URL-Key: $(SWIFT_TEMPURL_KEY)" ; \
 	swift  \
 	tempurl GET $$(echo '$(TARGET_SWIFT_VALIDITY_OF_TEMPURL_SEC)' | bc) $(TARGET_SWIFT_OBJECT)  $(SWIFT_TEMPURL_KEY) | xargs -I {} echo $(TARGET_SWIFT_ENDPOINT){}
+
+get_swift_tempurl_ispn_archive:
+	$(MAKE) get_swift_tempurl TARGET_SWIFT_OBJECT=$(TARGET_SWIFT_OBJECT_ISPN)
+
+
 
 

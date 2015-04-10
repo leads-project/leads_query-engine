@@ -253,9 +253,24 @@ Unicrawler
 
     # create temp_url for the Unicrawler archive:
     export MY_SECRET_KEY=$(openssl rand -hex 16)
-    make get_swift_temp_url_unicrawl_archive SWIFT_TEMPURL_KEY=${MY_SECRET_KEY}
+    # save this key
+
+    make get_swift_tempurl_unicrawl_archive SWIFT_TEMPURL_KEY=${MY_SECRET_KEY}
 
 2. Put the temp_url in *salt/salt_master/srv_salt/leads/unicrawl.cls*. Skip this point, if you have still a valid tempurl.
+
+3. Provision the node (see in /srv/salt/top.sls which node to provision --- now it is the YARN master)
+
+Infinispan (in migration to salt)
+---------------------------------------
+
+1. Skip this point, if you have still a valid tempurl. We use the object store (swift) to deliver packages during installation. To generate tempurl:
+  
+   ::
+
+     make get_swift_tempurl_ispn_archive SWIFT_TEMPURL_KEY=${MY_SECRET_KEY}
+
+2. TODO
 
 
 Development
