@@ -261,11 +261,18 @@ Unicrawler
 
 3. Provision the node (see in /srv/salt/top.sls which node to provision --- now it is the YARN master)
    
-4. Configure unicrawler:
+4. Configure Unicrawler:
    
    ::
 
      fab -H leads-yarn-1 configure_unicrawl \
+     --ssh-config ssh_config -f fabfile_unicrawl.py
+
+5. Setup Unicrawler:
+   
+   ::
+
+     fab -H leads-yarn-1 setup_unicrawl \
      --ssh-config ssh_config -f fabfile_unicrawl.py
 
 Infinispan (in migration to salt)

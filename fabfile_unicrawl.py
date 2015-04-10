@@ -6,20 +6,21 @@ from fabric.context_managers import shell_env
 from fabric.utils import error
 import os
 from fabfile_ispn import ispn_hosts_file
+from fabfile import hadoop_home_dir
 
 env.forward_agent = True
 env.use_ssh_config = True
 
 
 ispn_cluster_ips = ispn_hosts_file.keys()
-ispn_home = "/home/ubuntu/nutch"
+nutch_home_dir = "/home/ubuntu/nutch"
 
 
 @serial
 def configure_unicrawl():
     conn_string = _get_gora_conn_string(ispn_cluster_ips)
     props = _generate_gora_properties(conn_string)
-    write_gora_properties(props)
+    _write_gora_properties(nutch_home_dir, props)
 
 
 def _get_gora_conn_string(ispn_ips):
@@ -35,10 +36,19 @@ gora.datastore.connectionstring={0}
     return gora_properties.strip()
 
 
-def write_gora_properties(content):
+def _write_gora_properties(nutch_home, content):
     filename = "gora.properties"
 
-    with cd(ispn_home + '/conf/'):
+    with cd(nutch_home + '/conf/'):
         if not files.contains(filename, content):
             run("rm -f {0}; touch {0}".format(filename))
             files.append(filename, content)
+
+
+def setup_unicrawler():
+    nutch_home = nutch_home_dir
+    hadoop_home = hadoop_home_dir
+    with cd(nutch_home):
+        with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64',
+                       YARN_HOME=hadoop_home):
+            run("export PATH=$PATH:${YARN_HOME}/bin; ./bin/setup.sh")
