@@ -177,6 +177,25 @@ On you workstation with fabric, after completing provisioning with salt.
 
    -  connect with your web browser to *http://127.0.0.1:8088/cluster/nodes*
 
+
+Unicrawler
+--------------
+
+1. Skip this point, if you have still a valid tempurl:
+
+   ::
+
+    # import archive to swift
+
+    # adapt TARGET_SWIFT_OBJECT in Makefile if needed
+
+    # create temp_url for the Unicrawler archive:
+    export MY_SECRET_KEY=$(openssl rand -hex 16)
+    make get_swift_temp_url_unicrawl_archive SWIFT_TEMPURL_KEY=${MY_SECRET_KEY}
+
+2. Put the temp_url in *salt/salt_master/srv_salt/leads/unicrawl.cls*. Skip this point, if you have still a valid tempurl.
+
+
 Development
 ================
 

@@ -71,5 +71,19 @@ list_container:
 	    --os-tenant-name=$${OS_TENANT_NAME} \
 	    list  $(LEADS_QUERY_ENGINE_CONTAINER_NAME)"
 
+# default target
+TARGET_SWIFT_OBJECT=/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/unicrawl/nutch.tgz
+
+TARGET_SWIFT_ENDPOINT=https://object-hamm5.cloudandheat.com:8080
+
+# default value 30 days
+TARGET_SWIFT_VALIDITY_OF_TEMPURL_SEC=24*60*60*30
+
+get_swift_temp_url_unicrawl_archive:
+	if test '$(SWIFT_TEMPURL_KEY)' = ""; then echo "SWIFT_TEMPURL_KEY must be set"; exit 1; fi; \
+	unset OS_TENANT_ID ; \
+	swift post -m "Temp-URL-Key: $(SWIFT_TEMPURL_KEY)" ; \
+	swift  \
+	tempurl GET $$(echo '$(TARGET_SWIFT_VALIDITY_OF_TEMPURL_SEC)' | bc) $(TARGET_SWIFT_OBJECT)  $(SWIFT_TEMPURL_KEY) | xargs -I {} echo $(TARGET_SWIFT_ENDPOINT){}
 
 
