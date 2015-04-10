@@ -21,4 +21,5 @@
    - user: ubuntu
    - group: ubuntu 
    - pattern: \#export HADOOP_HEAPSIZE=
-   - repl: export HADOOP_HEAPSIZE=1000 
+   - repl: export HADOOP_HEAPSIZE=1000
+ 

@@ -20,11 +20,11 @@ Execute setup_leads:
   cmd.run:
    - user: ubuntu
    - env:
-      - 'OS_AUTH_URL': 'https://identity-hamm5.cloudandheat.com:5000/v2.0'
-      - 'OS_TENANT_ID': '73e8d4d1688f4e1f86926d4cb897091f'
-      - 'OS_TENANT_NAME': 'LEADS'
-      - 'OS_USERNAME': 'leads' 
-      - 'OS_PASSWORD': ''
+      - 'OS_AUTH_URL': {{ pillar['os.auth_url'] }}
+      - 'OS_TENANT_ID': {{ pillar['os.tenant_id'] }}
+      - 'OS_TENANT_NAME': {{ pillar['os.tenant_name'] }}
+      - 'OS_USERNAME': {{ pillar['os.username'] }}
+      - 'OS_PASSWORD': {{ pillar['os.password'] }}
       - 'LEADS_QUERY_ENGINE_CONTAINER_NAME': 'query_engine'
       - 'LEADS_QUERY_ENGINE_START': 'Y'
    - names:

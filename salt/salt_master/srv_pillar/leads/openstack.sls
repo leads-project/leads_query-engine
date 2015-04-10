@@ -1,0 +1,5 @@
+os.auth_url: 'https://identity-hamm5.cloudandheat.com:5000/v2.0'
+os.tenant_id: '73e8d4d1688f4e1f86926d4cb897091f'
+os.tenant_name: 'LEADS'
+os.username: 'leads'
+os.password: ''
