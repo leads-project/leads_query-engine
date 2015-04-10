@@ -17,7 +17,7 @@ Basic setup
 1. create a virtualenv (you need to have *virtualenv* and *virtualenvwrapper* installed)
 
    ::
-   
+
      make dev_virtual_create
 
      # you might need to install additional libraries,
@@ -42,7 +42,7 @@ Basic setup
 Prepare micro-cloud
 -----------------------
 
-Most probably, it is one already.
+Most probably, it is done already.
 
 1. Import the shared project ssh key (if it is not there):
 
@@ -88,53 +88,63 @@ Basic functionality
     # creating new leads cluster salt-master
     sudo salt-cloud -c salt  -p saltmaster_hamm5 leads-saltmaster -l debug
 
-Setup cluster
-------------------------
+Prepare salt-master
+---------------------
+
+Most probably, it is done already.
+
+TODO: move the salt master to git-based back-end. Use hostname for the salt master.
 
 1. Create a salt-master:
 
    ::
     
+     sudo salt-cloud -c salt  -m salt/leads_saltmaster.map
+     # OR without map file
      sudo salt-cloud -c salt  -p saltmaster_hamm5 leads-saltmaster -l debug
-
-2. Create nodes 3 nodes for Query Engine:
- 
-   ::
-
-     sudo salt-cloud -c salt -m salt/leads_query-engine.map
- 
-3. Create 3 nodes for *YARN* (crawling with unicrawl)
-
-   ::
-
-     sudo salt-cloud -c salt -m salt/leads_yarn.map   
-
-4. Create nodes for *Infinispan* cluster (will be merged with 2):
+     
+2. Ssh to salt-master (use *--query* subcommand of *salt-cloud* to get the IP)
    
    ::
 
-     sudo salt-cloud -c salt  -m salt/leads_infinispan.map
+     sudo salt-cloud -c salt  -m salt/leads_saltmaster.map --query
 
-Prepare salt-master
----------------------
-
-TODO: move the salt master to git-based back-end. Use hostname for the salt master.
-
-1. Ssh to salt-master (use *--query* subcommand of *salt-cloud* to get the IP)
-
-2. Check whether all minion keys are accepted
+3. Check whether all minion keys are accepted
    
    ::
 
      sudo salt-key -L
      sudo salt-key -a <minion_name>
 
-3. Copy content of *salt/salt_master/srv_salt* to /srv/salt/
+4. Copy content of *salt/salt_master/srv_salt* to /srv/salt/
   
    ::
 
      mkdir -p /srv/salt
      cp -R salt/salt_master/srv_salt/* /srv/salt
+
+5. See the status: 
+
+Create VMs
+------------------------
+
+1. Create nodes 3 nodes for Query Engine:
+ 
+   ::
+
+     sudo salt-cloud -c salt -m salt/leads_query-engine.map
+ 
+2. Create 3 nodes for *YARN* (crawling with unicrawl)
+
+   ::
+
+     sudo salt-cloud -c salt -m salt/leads_yarn.map   
+
+3. Create nodes for *Infinispan* cluster (will be merged with 2):
+   
+   ::
+
+     sudo salt-cloud -c salt  -m salt/leads_infinispan.map
 
 Provision
 --------------
