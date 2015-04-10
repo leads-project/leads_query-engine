@@ -324,6 +324,13 @@ You can add a node to a security group with nova commands:
 
 In this example, we add *leads-yarn-1* to security group *internal_ispn*.
 
+
+Limitations
+==============
+
+- [CLUSTER] still some nodes have to be added to  security groups manually (e.g., nodes that need to connect to YARN and ISPN)
+- [YARN] you need manually login to YARN master and add YARN slaves ssh fingerprints
+
 Development
 ================
 
