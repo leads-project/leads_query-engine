@@ -283,7 +283,32 @@ Infinispan (in migration to salt)
    
    ::
 
-     fab -H leads-ispn-1,leads-ispn-2 install_infinispan --ssh-config ssh_config -f fabfile_ispn.py
+     fab -H leads-ispn-1,leads-ispn-2 install_infinispan \
+     --ssh-config ssh_config -f fabfile_ispn.py
+
+5. start the cluster:
+   
+   ::
+   
+     fab -H leads-ispn-1,leads-ispn-2 start_infinispan_service \
+     --ssh-config ssh_config -f fabfile_ispn.py
+
+6. Check whether the nodes work in cluster:
+   
+   ::
+
+     ssh leads-ispn-1 -F ssh_config
+
+     grep jgroups ~/infinispan/standalone/log/console.log | grep ispn-1 | grep ispn-2
+
+   You should see:
+
+   ::
+
+     14:47:00,627 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] 
+     (Incoming-1,shared=tcp) 
+     ISPN000094: Received new cluster view for channel 26001: [leads-ispn-1/26001|1] 
+     (2) [leads-ispn-1/26001, leads-ispn-2/26001]
 
 
 Development

@@ -18,7 +18,7 @@ export JAVA_HOME
 # Wojtek:
 # hack, we should move to the standard structure as soon as possible
 #
-export HOME_UBUNTU_USER="/home/ubuntu/infinispan-server-7.0.1-SNAPSHOT"
+export HOME_UBUNTU_USER="/home/ubuntu/infinispan"
 ISPN_SERVER_HOME=${HOME_UBUNTU_USER}
 ISPN_SERVER_CONSOLE_LOG=${ISPN_SERVER_HOME}/standalone/log/console.log
 ISPN_SERVER_CONFIG=infinispan-config.xml

@@ -25,6 +25,11 @@ ispn_hosts_file = {
     "10.105.0.39": "leads-ispn-2"
 }
 
+ispn_host_to_private_ip = {
+    "leads-ispn-1": "10.105.0.40",
+    "leads-ispn-2": "10.105.0.39"
+}
+
 cluster_private_ips = list(["10.105.0.39"])
 cluster_private_ips.append(ispn_master_node_ip)
 
@@ -46,7 +51,9 @@ def install_infinispan():
         run("echo '" + infinispan_package_url+"' > infinispan.INFO")
     if not exists("infinispan"):
         run("tar zxvf infinispan.tgz")
-    content = _get_infinispan_config(cluster_private_ips)
+
+    my_interface_ip = ispn_host_to_private_ip[env.host_string]
+    content = _get_infinispan_config(cluster_private_ips, my_interface_ip)
     tmp_file = _save_tmp_infinispan_config_file(content)
     _upload_with_scp(
         tmp_file,
@@ -71,13 +78,13 @@ def _is_package_installed(pkg_name):
     return result.succeeded
 
 
-def _get_infinispan_config(private_ips):
+def _get_infinispan_config(private_ips, my_interface_ip):
     """
     """
     with open("files/templates/infinispan-config_template.xml", "r") as f:
         infinispan_config_template = f.read()
 
-    config = infinispan_config_template.replace("@NODE_IP@", env.host)
+    config = infinispan_config_template.replace("@NODE_IP@", my_interface_ip)
 
     ps = [p_i + "[55200]" for p_i in private_ips]
     config = config.replace("@TCPPING.initial_hosts@", ",".join(ps))
