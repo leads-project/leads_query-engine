@@ -133,6 +133,12 @@ TODO: move the salt master to git-based back-end. Use hostname for the salt mast
 Create VMs
 ------------------------
 
+0. Check the status of Query-Engine nodes (with *--query* postfix):
+   
+   ::
+
+     sudo salt-cloud -c salt -m salt/leads_query-engine.map --query
+
 1. Create nodes 3 nodes for Query Engine:
  
    ::
