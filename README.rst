@@ -17,8 +17,11 @@ Basic setup
 1. create a virtualenv (you need to have *virtualenv* and *virtualenvwrapper* installed)
 
    ::
-
+   
      make dev_virtual_create
+
+     # you might need to install additional libraries,
+     # such as libssl-dev (ubuntu)
      make dev_virtual_install_packages
 
 2. Activate the virtualenv:
