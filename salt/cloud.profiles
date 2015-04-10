@@ -19,6 +19,10 @@ ubuntu_large_hamm5_yarn:
     extends: ubuntu_large_hamm5
     security_groups: default,global_saltstack,internal_yarn
 
+ubuntu_large_hamm5_ispn:
+    extends: ubuntu_large_hamm5
+    security_groups: default,global_saltstack,internal_yarn,internal_ispn
+
 ubuntu_large_hamm6:
     provider: cah-hamm6
     ssh_username: ubuntu
