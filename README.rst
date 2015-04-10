@@ -233,7 +233,7 @@ On you workstation with fabric, after completing provisioning with salt.
 
        ssh  -L 8088:<private ip>:8088 \
             -L 8042:<private ip>:8042 \
-            -L 50070:<private_ip>:50070 \
+            -L 50070:127.0.0.1:50070 \
             -L 50075:127.0.0.1:50075 leads-yarn-1 \
             -i ~/.ssh/leads_cluster
             -F ssh_config
