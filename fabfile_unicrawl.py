@@ -75,7 +75,8 @@ def _run_unicrawler_with(option):
 
 
 def start_unicrawler():
-    _run_unicrawler_with("")
+    number_of_rounds = "1"
+    _run_unicrawler_with(number_of_rounds)
 
 
 def _patch_dnutch_script(nutch_home):
