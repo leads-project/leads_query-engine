@@ -14,7 +14,7 @@ How to use it
 Basic setup
 ----------------
 
-1. create a virtualenv (you need to have *virtualenvwrapper* installed)
+1. create a virtualenv (you need to have *virtualenv* and *virtualenvwrapper* installed)
 
    ::
 
@@ -39,18 +39,28 @@ Basic setup
 Prepare micro-cloud
 -----------------------
 
-1. Import the shared project ssh key:
+Most probably, it is one already.
+
+1. Import the shared project ssh key (if it is not there):
 
    ::
 
-     make deploy_create_salt_security_group
-
-
-2. Create basic groups (for saltstack communication)
-   
-   ::
+     # import openrc of the target ucloud
+     import openrc
 
      make deploy_import_leads_deploy_ssh_key
+
+2. Create basic groups (for saltstack, yarn, and ispn communication)
+
+   ::
+
+     # import openrc of the target ucloud
+     import openrc
+     
+     make deploy_create_salt_security_group
+     make deploy_create_yarn_security_group
+     make deploy_create_ispn_security_group   
+
 
 Basic functionality
 ------------------------------
@@ -84,7 +94,7 @@ Setup cluster
     
      sudo salt-cloud -c salt  -p saltmaster_hamm5 leads-saltmaster -l debug
 
-2. Create nodes 3 nodes:
+2. Create nodes 3 nodes for Query Engine:
  
    ::
 
@@ -95,6 +105,12 @@ Setup cluster
    ::
 
      sudo salt-cloud -c salt -m salt/leads_yarn.map   
+
+4. Create nodes for *Infinispan* cluster (will be merged with 2):
+   
+   ::
+
+     sudo salt-cloud -c salt  -m salt/leads_infinispan.map
 
 Prepare salt-master
 ---------------------
