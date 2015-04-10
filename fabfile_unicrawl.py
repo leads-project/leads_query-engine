@@ -18,7 +18,7 @@ hadoop_name_node = hadoop_master_node_ip
 
 
 @serial
-def configure_unicrawl():
+def configure_unicrawler():
     conn_string = _get_gora_conn_string(ispn_cluster_ips)
     props = _generate_gora_properties(conn_string)
     _write_gora_properties(nutch_home_dir, props)

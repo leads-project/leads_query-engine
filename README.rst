@@ -265,14 +265,21 @@ Unicrawler
    
    ::
 
-     fab -H leads-yarn-1 configure_unicrawl \
+     fab -H leads-yarn-1 configure_unicrawler \
      --ssh-config ssh_config -f fabfile_unicrawl.py
 
-5. Setup Unicrawler:
+5. Setup Unicrawler (prepare hadoop fs):
    
    ::
 
-     fab -H leads-yarn-1 setup_unicrawl \
+     fab -H leads-yarn-1 setup_unicrawler \
+     --ssh-config ssh_config -f fabfile_unicrawl.py
+
+6. Start Unicrawler:
+
+   ::
+
+     fab -H leads-yarn-1 start_unicrawler \
      --ssh-config ssh_config -f fabfile_unicrawl.py
 
 Infinispan (in migration to salt)
