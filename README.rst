@@ -14,6 +14,12 @@ How to use it
 Basic setup
 ----------------
 
+0. (EASIEST then using virtualenv, **skip 2 and 3**) install libraries globally: 
+   
+   ::
+
+     sudo pip install -r requirements
+
 1. create a virtualenv (you need to have *virtualenv* and *virtualenvwrapper* installed)
 
    ::
