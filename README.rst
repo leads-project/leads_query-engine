@@ -260,6 +260,13 @@ Unicrawler
 2. Put the temp_url in *salt/salt_master/srv_salt/leads/unicrawl.cls*. Skip this point, if you have still a valid tempurl.
 
 3. Provision the node (see in /srv/salt/top.sls which node to provision --- now it is the YARN master)
+   
+4. Configure unicrawler:
+   
+   ::
+
+     fab -H leads-yarn-1 configure_unicrawl \
+     --ssh-config ssh_config -f fabfile_unicrawl.py
 
 Infinispan (in migration to salt)
 ---------------------------------------
