@@ -310,6 +310,19 @@ Infinispan (in migration to salt)
      ISPN000094: Received new cluster view for channel 26001: [leads-ispn-1/26001|1] 
      (2) [leads-ispn-1/26001, leads-ispn-2/26001]
 
+Useful info
+==================
+
+Security (network) groups 
+------------------------------------
+
+You can add a node to a security group with nova commands:
+
+::
+
+  nova add-secgroup leads-yarn-1 internal_ispn
+
+In this example, we add *leads-yarn-1* to security group *internal_ispn*.
 
 Development
 ================
