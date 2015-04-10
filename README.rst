@@ -114,6 +114,8 @@ TODO: move the salt master to git-based back-end. Use hostname for the salt mast
    ::
 
      sudo salt-key -L
+
+     # accept the minion key
      sudo salt-key -a <minion_name>
 
 4. Copy content of *salt/salt_master/srv_salt* to /srv/salt/
@@ -166,12 +168,21 @@ Provision
 
      sudo salt-cloud -c salt  -m salt/leads_saltmaster.map --query
 
+2. Check if *OS_PASSWORD* is set in */srv/pillar/leads/openstack.sls*
 
-2. If not done, copy the content of salt/salt_master/srv_salt to /srv/salt
+3. Check whether all minion keys are accepted:
 
-3. Setup *OS_PASSWORD* in */srv/salt/salt/leads/setup_script.sls*
+   ::
+
+     sudo salt-key -L
+
+4. Check if saltmaster is connected to nodes:
+
+   ::
+
+     sudo salt '*' test.ping
   
-4. Provision the nodes for *query_engine* with infinityspan:
+5. Provision the nodes for *query_engine* with infinityspan:
    
    ::
 
@@ -179,7 +190,7 @@ Provision
      salt 'leads-qe2' state.highstate -l debug
      salt 'leads-qe3' state.highstate -l debug
 
-5. Provision the nodes for *YARN* and Unicrawler:
+6. Provision the nodes for *YARN* and Unicrawler:
    
    :: 
 
