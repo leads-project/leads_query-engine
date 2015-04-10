@@ -85,8 +85,8 @@ Basic functionality
   
   ::
 
-    # creating new leads cluster salt-master
-    sudo salt-cloud -c salt  -p saltmaster_hamm5 leads-saltmaster -l debug
+    # get all info about saltmaster
+    sudo salt-cloud -c salt  -m salt/leads_saltmaster.map --query
 
 Prepare salt-master
 ---------------------
