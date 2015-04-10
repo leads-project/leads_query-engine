@@ -12,3 +12,14 @@ Host leads-yarn-3
     Hostname {}
     User ubuntu
     IdentityFile ~/.ssh/leads_cluster
+
+Host leads-ispn-1
+    Hostname {}
+    User ubuntu
+    IdentityFile ~/.ssh/leads_cluster
+
+
+Host leads-ispn-2
+    Hostname {}
+    User ubuntu
+    IdentityFile ~/.ssh/leads_cluster

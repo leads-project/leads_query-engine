@@ -14,11 +14,20 @@ How to use it
 Basic setup
 ----------------
 
-1. create a virtualenv (you need to have *virtualenvwrapper* installed)
+0. (EASIEST then using virtualenv, **skip 1 and 2**) install libraries globally: 
+   
+   ::
+
+     sudo pip install -r requirements
+
+1. create a virtualenv (you need to have *virtualenv* and *virtualenvwrapper* installed)
 
    ::
 
      make dev_virtual_create
+
+     # you might need to install additional libraries,
+     # such as libssl-dev (ubuntu)
      make dev_virtual_install_packages
 
 2. Activate the virtualenv:
@@ -39,18 +48,28 @@ Basic setup
 Prepare micro-cloud
 -----------------------
 
-1. Import the shared project ssh key:
+Most probably, it is done already.
+
+1. Import the shared project ssh key (if it is not there):
 
    ::
 
-     make deploy_create_salt_security_group
-
-
-2. Create basic groups (for saltstack communication)
-   
-   ::
+     # import openrc of the target ucloud
+     import openrc
 
      make deploy_import_leads_deploy_ssh_key
+
+2. Create basic groups (for saltstack, yarn, and ispn communication)
+
+   ::
+
+     # import openrc of the target ucloud
+     import openrc
+     
+     make deploy_create_salt_security_group
+     make deploy_create_yarn_security_group
+     make deploy_create_ispn_security_group   
+
 
 Basic functionality
 ------------------------------
@@ -72,61 +91,104 @@ Basic functionality
   
   ::
 
-    # creating new leads cluster salt-master
-    sudo salt-cloud -c salt  -p saltmaster_hamm5 leads-saltmaster -l debug
+    # get all info about saltmaster
+    sudo salt-cloud -c salt  -m salt/leads_saltmaster.map --query
 
-Setup cluster
-------------------------
+Prepare salt-master
+---------------------
+
+Most probably, it is done already.
+
+TODO: move the salt master to git-based back-end. Use hostname for the salt master.
 
 1. Create a salt-master:
 
    ::
     
+     sudo salt-cloud -c salt  -m salt/leads_saltmaster.map
+     # OR without map file
      sudo salt-cloud -c salt  -p saltmaster_hamm5 leads-saltmaster -l debug
-
-2. Create nodes 3 nodes:
- 
+     
+2. Ssh to salt-master (use *--query* subcommand of *salt-cloud* to get the IP)
+   
    ::
 
-     sudo salt-cloud -c salt -m salt/leads_query-engine.map
- 
-3. Create 3 nodes for *YARN* (crawling with unicrawl)
+     sudo salt-cloud -c salt  -m salt/leads_saltmaster.map --query
 
-   ::
-
-     sudo salt-cloud -c salt -m salt/leads_yarn.map   
-
-Prepare salt-master
----------------------
-
-TODO: move the salt master to git-based back-end. Use hostname for the salt master.
-
-1. Ssh to salt-master (use *--query* subcommand of *salt-cloud* to get the IP)
-
-2. Check whether all minion keys are accepted
+3. Check whether all minion keys are accepted
    
    ::
 
      sudo salt-key -L
+
+     # accept the minion key
      sudo salt-key -a <minion_name>
 
-3. Copy content of *salt/salt_master/srv_salt* to /srv/salt/
+4. Copy content of *salt/salt_master/srv_salt* to /srv/salt/
   
    ::
 
      mkdir -p /srv/salt
      cp -R salt/salt_master/srv_salt/* /srv/salt
 
+5. Copy content of *salt/salt_master/srv_pillar* to /srv/pillar/
+
+   ::
+
+     mkdir -p /srv/pillar
+     cp -R salt/salt_master/srv_pillar/* /srv/pillar
+
+Create VMs
+------------------------
+
+0. Check the status of Query-Engine nodes (with *--query* postfix):
+   
+   ::
+
+     sudo salt-cloud -c salt -m salt/leads_query-engine.map --query
+
+1. Create nodes 3 nodes for Query Engine:
+ 
+   ::
+
+     sudo salt-cloud -c salt -m salt/leads_query-engine.map
+ 
+2. Create 3 nodes for *YARN* (crawling with unicrawl)
+
+   ::
+
+     sudo salt-cloud -c salt -m salt/leads_yarn.map   
+
+3. Create nodes for *Infinispan* cluster (will be merged with 2):
+   
+   ::
+
+     sudo salt-cloud -c salt  -m salt/leads_infinispan.map
+
 Provision
 --------------
 
-1. Login to the leads-saltmaster
+1. Login to the leads-saltmaster, to get IP run:
 
-2. Copy the content of salt/salt_master/srv_salt to /srv/salt
+   ::
 
-3. Setup *OS_PASSWORD* in */srv/salt/salt/leads/setup_script.sls*
+     sudo salt-cloud -c salt  -m salt/leads_saltmaster.map --query
+
+2. Check if *OS_PASSWORD* is set in */srv/pillar/leads/openstack.sls*
+
+3. Check whether all minion keys are accepted:
+
+   ::
+
+     sudo salt-key -L
+
+4. Check if saltmaster is connected to nodes:
+
+   ::
+
+     sudo salt '*' test.ping
   
-4. Provision the nodes for *query_engine* with infinityspan:
+5. Provision the nodes for *query_engine* with infinityspan:
    
    ::
 
@@ -134,7 +196,7 @@ Provision
      salt 'leads-qe2' state.highstate -l debug
      salt 'leads-qe3' state.highstate -l debug
 
-5. Provision the nodes for *YARN* and Unicrawler:
+6. Provision the nodes for *YARN* and Unicrawler:
    
    :: 
 
@@ -191,9 +253,62 @@ Unicrawler
 
     # create temp_url for the Unicrawler archive:
     export MY_SECRET_KEY=$(openssl rand -hex 16)
-    make get_swift_temp_url_unicrawl_archive SWIFT_TEMPURL_KEY=${MY_SECRET_KEY}
+    # save this key
+
+    make get_swift_tempurl_unicrawl_archive SWIFT_TEMPURL_KEY=${MY_SECRET_KEY}
 
 2. Put the temp_url in *salt/salt_master/srv_salt/leads/unicrawl.cls*. Skip this point, if you have still a valid tempurl.
+
+3. Provision the node (see in /srv/salt/top.sls which node to provision --- now it is the YARN master)
+
+Infinispan (in migration to salt)
+---------------------------------------
+
+1. Skip this point, if you have still a valid tempurl. We use the object store (swift) to deliver packages during installation. To generate tempurl:
+  
+   ::
+
+     make get_swift_tempurl_ispn_archive SWIFT_TEMPURL_KEY=${MY_SECRET_KEY}
+
+2. Fill the missing IPs in ssh_config_tmp and save it to ssh_config.
+
+3. Check whether you can connect to ispn server:
+   
+   ::
+
+     ssh leads-ispn-1 -F ssh_config
+
+
+4. Provision (still with fabfile):
+   
+   ::
+
+     fab -H leads-ispn-1,leads-ispn-2 install_infinispan \
+     --ssh-config ssh_config -f fabfile_ispn.py
+
+5. start the cluster:
+   
+   ::
+   
+     fab -H leads-ispn-1,leads-ispn-2 start_infinispan_service \
+     --ssh-config ssh_config -f fabfile_ispn.py
+
+6. Check whether the nodes work in cluster:
+   
+   ::
+
+     ssh leads-ispn-1 -F ssh_config
+
+     grep jgroups ~/infinispan/standalone/log/console.log | grep ispn-1 | grep ispn-2
+
+   You should see:
+
+   ::
+
+     14:47:00,627 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] 
+     (Incoming-1,shared=tcp) 
+     ISPN000094: Received new cluster view for channel 26001: [leads-ispn-1/26001|1] 
+     (2) [leads-ispn-1/26001, leads-ispn-2/26001]
 
 
 Development
