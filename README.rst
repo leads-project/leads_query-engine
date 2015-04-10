@@ -123,7 +123,12 @@ TODO: move the salt master to git-based back-end. Use hostname for the salt mast
      mkdir -p /srv/salt
      cp -R salt/salt_master/srv_salt/* /srv/salt
 
-5. See the status: 
+5. Copy content of *salt/salt_master/srv_pillar* to /srv/pillar/
+
+   ::
+
+     mkdir -p /srv/pillar
+     cp -R salt/salt_master/srv_pillar/* /srv/pillar
 
 Create VMs
 ------------------------
@@ -149,9 +154,14 @@ Create VMs
 Provision
 --------------
 
-1. Login to the leads-saltmaster
+1. Login to the leads-saltmaster, to get IP run:
 
-2. Copy the content of salt/salt_master/srv_salt to /srv/salt
+   ::
+
+     sudo salt-cloud -c salt  -m salt/leads_saltmaster.map --query
+
+
+2. If not done, copy the content of salt/salt_master/srv_salt to /srv/salt
 
 3. Setup *OS_PASSWORD* in */srv/salt/salt/leads/setup_script.sls*
   
