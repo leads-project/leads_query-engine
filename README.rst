@@ -14,7 +14,7 @@ How to use it
 Basic setup
 ----------------
 
-1. (EASIEST then using virtualenv, **skip 2 and 3**) install libraries globally: 
+1. (RECOMMENDED, **skip 2 and 3**) Install all python-based tools globally: 
    
    ::
 
