@@ -348,14 +348,37 @@ def hadoop_run_example_application_pi():
                 ' pi 16 100000')
 
 
+tera_size = 100000
+tera_input_dir = '/tmp/tera_input'
+tera_output_dir = '/tmp/tera_output'
+tera_validate_dir = '/tmp/tera_validate'
+
+
 @roles_host_string_based('masters')
 def hadoop_example_terrasort_gen():
     hadoop_home = hadoop_home_dir
+    run("rm -rf " + tera_input_dir)
     with cd(hadoop_home):
         with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'):
             run('bin/yarn jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.2.jar'
-                '  teragen 10000 /tmp/terradata')
+                '  teragen  ' + str(tera_size) + ' ' + tera_input_dir)
 
 
+@roles_host_string_based('masters')
+def hadoop_example_terrasort_run():
+    hadoop_home = hadoop_home_dir
+    run("rm -rf {0}".format(tera_output_dir))
+    with cd(hadoop_home):
+        with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'):
+            run('bin/yarn jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.2.jar'
+                '  terasort ' + tera_input_dir + ' ' + tera_output_dir)
 
 
+@roles_host_string_based('masters')
+def hadoop_example_terrasort_validate():
+    hadoop_home = hadoop_home_dir
+    run("rm -rf {0}".format(tera_validate_dir))
+    with cd(hadoop_home):
+        with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'):
+            run('bin/yarn jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.2.jar'
+                '  teravalidate ' + tera_output_dir + ' ' + tera_validate_dir)
