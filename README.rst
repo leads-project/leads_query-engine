@@ -14,13 +14,13 @@ How to use it
 Basic setup
 ----------------
 
-0. (EASIEST then using virtualenv, **skip 1 and 2**) install libraries globally: 
+1. (EASIEST then using virtualenv, **skip 2 and 3**) install libraries globally: 
    
    ::
 
      sudo pip install -r requirements
 
-1. create a virtualenv (you need to have *virtualenv* and *virtualenvwrapper* installed)
+2. create a virtualenv (you need to have *virtualenv* and *virtualenvwrapper* installed)
 
    ::
 
@@ -30,13 +30,13 @@ Basic setup
      # such as libssl-dev (ubuntu)
      make dev_virtual_install_packages
 
-2. Activate the virtualenv:
+3. Activate the virtualenv:
    
    ::
 
      $(make dev_virtualenv_printname)
 
-3. Generate the configuration files with you *OS_USER* and *OS_PASSWORD*
+4. Generate the configuration files with you *OS_USER* and *OS_PASSWORD*
    
    ::
 
