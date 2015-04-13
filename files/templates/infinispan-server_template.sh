@@ -119,7 +119,7 @@ start() {
     let count=$count+1;
   done
   
-  success
+  log_success_msg
   echo
   return 0
 }
@@ -146,7 +146,7 @@ stop() {
     fi
   fi
   rm -f $ISPN_SERVER_PIDFILE
-  success
+  log_success_msg
   echo
 }
 
