@@ -24,11 +24,23 @@ Setup alternatives:
             - sudo update-alternatives --set libblas.so.3  /usr/lib/atlas-base/atlas/libblas.so.3
             - sudo update-alternatives --set liblapack.so.3 /usr/lib/atlas-base/atlas/liblapack.so.3
 
-adidas pip deps:
+scikit-learn:
     pip.installed:
-        - pkgs: 
-            - scikit-learn
-            - requests
-            - lxml
-            - BeautifulSoup
-            - pyzmq
+        - name: scikit-learn
+    
+
+requests:
+    pip.installed:
+        - name: requests
+
+lxml:
+    pip.installed:
+        - name: lxml
+
+BeautifulSoup:
+    pip.installed:
+        - name: BeautifulSoup
+
+Pyzmq:
+    pip.installed:
+        - name:  pyzmq
