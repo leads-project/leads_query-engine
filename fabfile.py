@@ -5,6 +5,7 @@ from fabric.api import hide, parallel, roles, hosts, serial
 from fabric.context_managers import shell_env
 from fabric.utils import error
 import os
+import re
 
 from prettytable import PrettyTable
 
@@ -12,25 +13,9 @@ from prettytable import PrettyTable
 env.forward_agent = True
 env.use_ssh_config = True
 
-# infinispan - 54200 and 55200
-# hadoop - 9000 and 9001 and 50070 (NameNode) and 8088 (resourcemanager)
-# cluster_port_communication = ['22', '9000', '9001', '50070',
-#                              '8088', '19888', '10020']
-
-hadoop_master_node_ip = "10.105.0.46"
-hadoop_master_node = "leads-yarn-1"
-hadoop_slave_node_ips = ["10.105.0.51", "10.105.0.47"]
-hadoop_slave_nodes = ["leads-yarn-2", "leads-yarn-3"]
-
 env.roledefs = {
-    'masters': [hadoop_master_node],
-    'slaves': hadoop_slave_nodes
-}
-
-hadoop_hosts_file = {
-    "10.105.0.46": "leads-yarn-1",
-    "10.105.0.51": "leads-yarn-2",
-    "10.105.0.47": "leads-yarn-3"
+    'masters': "leads-yarn.*-1",
+    'slaves': "leads-yarn.*-[23]"
 }
 
 hadoop_home_dir = "/home/ubuntu/{0}".format("hadoop-2.5.2")
@@ -44,196 +29,11 @@ def roles_host_string_based(*args):
     def new_decorator(func):
         def func_wrapper(*args, **kwargs):
             for role in supported_roles:
-                role_hosts = [r[1] for r in env.roledefs.items() if r[0] == role][0]
-                if env.host_string in role_hosts:
+                role_rgx = [r[1] for r in env.roledefs.items() if r[0] == role][0]
+                if re.match(role_rgx, env.host_string) is not None:
                     func(*args, **kwargs)
         return func_wrapper
     return new_decorator
-
-
-@roles_host_string_based('masters', 'slaves')
-@parallel
-def prepare_hadoop():
-    hadoop_home = hadoop_home_dir
-    _hadoop_configure(hadoop_home)
-
-
-def _hadoop_configure(hadoop_home):
-    _hadoop_change_map_red_site(hadoop_home, hadoop_master_node)
-    _hadoop_change_core_site(hadoop_home, hadoop_master_node_ip)
-    _hadoop_change_yarn_site(hadoop_home, hadoop_master_node)
-    _hadoop_change_HDFS_site(hadoop_home, hadoop_master_node)
-    _hadoop_change_masters(hadoop_home, hadoop_master_node)
-    _hadoop_change_slaves(hadoop_home, env.roledefs['slaves'])
-    _hadoop_prepare_etc_host(hadoop_hosts_file)
-
-
-@roles_host_string_based('masters', 'slaves')
-def _hadoop_change_map_red_site(hadoop_home, master, map_task='8', reduce_task='6'):
-    """
-    Based on input from Le Quoc Do - SE Group TU Dresden contribution
-    """
-    before = '<configuration>'
-    after = """
-<configuration>
-    <property>
-        <name>mapred.job.tracker</name>
-        <value>{0}:9001</value>
-    </property>
-
-    <property>
-        <name>mapred.map.tasks</name>
-        <value>{1}</value>
-    </property>
-
-    <property>
-        <name>mapred.reduce.tasks</name>
-        <value>{2}</value>
-    </property>
-
-    <property>
-        <name>mapred.system.dir</name>
-        <value>{3}/hdfs/mapreduce/system</value>
-    </property>
-
-    <property>
-        <name>mapred.local.dir</name>
-        <value>{3}/hdfs/mapreduce/local</value>
-    </property>
-
-    <property>
-        <name>mapreduce.framework.name</name>
-        <value>yarn</value>
-    </property>
-    """.format(master, map_task, reduce_task,  hadoop_home)
-
-    with cd(hadoop_home + '/etc/hadoop/'):
-        run('cp mapred-site.xml.template mapred-site.xml')
-        filename = 'mapred-site.xml'
-        files.sed(filename, before, after.replace("\n", "\\n"), limit='')
-
-
-@roles_host_string_based('masters', 'slaves')
-def _hadoop_change_core_site(hadoop_home, master_ip):
-    """
-    Based on input from Le Quoc Do - SE Group TU Dresden contribution
-    """
-    content = """
-<configuration>
-    <property>
-        <name>hadoop.tmp.dir</name>
-        <value>{0}/hdfs</value>
-    </property>
-    <!-- property>
-        <name>fs.defaultFS</name>
-        <value>hdfs://{1}:8020</value>
-    </property -->
-
-    <property>
-        <name>fs.default.name</name>
-        <value>hdfs://{1}:8020</value>
-    </property>
-
-    <property>
-        <name>mapred.job.tracker</name>
-        <value>{1}:9001</value>
-    </property>
-</configuration>""".format(hadoop_home, master_ip)
-
-    filename = 'core-site.xml'
-    with cd(hadoop_home + '/etc/hadoop/'):
-        run("rm -f {0}; touch {0}".format(filename))
-        files.append(filename, content)
-
-
-@roles_host_string_based('masters', 'slaves')
-def _hadoop_change_yarn_site(hadoop_home, master):
-    filename = 'yarn-site.xml'
-
-    content = """
-<configuration>
-    <property>
-        <name>yarn.resourcemanager.hostname</name>
-        <value>{0}</value>
-        <description>The hostname of the ResourceManager</description>
-    </property>
-    <property>
-        <name>yarn.nodemanager.aux-services</name>
-        <value>mapreduce_shuffle</value>
-    </property>
-</configuration>""".format(master)
-
-    with cd(hadoop_home + '/etc/hadoop/'):
-        run("rm -f {0}; touch {0}".format(filename))
-        files.append(filename, content)
-
-
-@roles_host_string_based('masters', 'slaves')
-def _hadoop_change_HDFS_site(hadoop_home, master, replica='1', xcieversmax='10096'):
-    """
-    Based on input from Le Quoc Do - SE Group TU Dresden contribution
-    """
-    filename = 'hdfs-site.xml'
-    content = """
-<configuration>
-    <property>
-        <name>dfs.name.dir</name>
-        <value>file://{0}/hdfs/name</value>
-    </property>
-    <property>
-        <name>dfs.data.dir</name>
-        <value>file://{0}/hdfs/data</value>
-    </property>
-
-    <property>
-        <name>dfs.replication</name>
-        <value>{1}</value>
-    </property>
-
-    <property>
-        <name>dfs.datanode.max.xcievers</name>
-        <value>{2}</value>
-    </property>
-</configuration>
-""".format(hadoop_home, replica,  xcieversmax)
-
-    with cd(hadoop_home + '/etc/hadoop/'):
-        run("rm -f {0}; touch {0}".format(filename))
-        files.append(filename, content)
-
-
-@roles_host_string_based('masters', 'slaves')
-def _hadoop_change_masters(hadoop_home, master):
-    """
-    Le Quoc Do - SE Group TU Dresden contribution
-    """
-    filename = 'masters'
-
-    with cd(hadoop_home + '/etc/hadoop'):
-        run("rm -f masters; touch masters")
-        files.append(filename, master)
-
-
-@roles_host_string_based('masters', 'slaves')
-def _hadoop_change_slaves(hadoop_home, slaves):
-    """
-    Le Quoc Do - SE Group TU Dresden contribution
-    """
-    filename = 'slaves'
-    before = 'localhost'
-    after = ''
-    for slave in slaves:
-        after = after + slave + '\\n'
-    with cd(hadoop_home + '/etc/hadoop'):
-        files.sed(filename, before, after, limit='')
-
-
-@roles_host_string_based('masters', 'slaves')
-def _hadoop_prepare_etc_host(ip_to_hosts):
-    for ip, hn in ip_to_hosts.iteritems():
-        entry = "{0} {1}".format(ip, hn)
-        if not files.contains('/etc/hosts', entry):
-            files.append('/etc/hosts', entry, use_sudo=True)
 
 
 @roles_host_string_based('masters', 'slaves')
