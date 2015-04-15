@@ -45,6 +45,9 @@ list_ucloud:
 list_images: 
 	sudo  salt-cloud -c salt --list-sizes $(TARGET_UCLOUD)
 
+generate_ssh_config:
+	bash  tools/salt/generate_ssh_config.sh
+
 test_vagrant_create_local_node:
 	vagrant up
 
