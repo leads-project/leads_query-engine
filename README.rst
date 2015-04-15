@@ -201,6 +201,18 @@ Provision
    :: 
 
      salt 'leads-yarn*' state.highstate -l debug
+     
+     
+Generate ssh_config
+-------------------------
+
+You might want to have a *ssh_config* generated from salt map files. Use the following command:
+
+::
+
+  make generate_ssh_config
+  
+Notice: it will delete the existing *ssh_config* in the project main directory and create new one.
 
 YARN (in migration to salt)
 -------------------------------
