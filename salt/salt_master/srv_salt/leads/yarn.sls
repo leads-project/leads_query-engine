@@ -22,4 +22,50 @@
    - group: ubuntu 
    - pattern: \#export HADOOP_HEAPSIZE=
    - repl: export HADOOP_HEAPSIZE=1000
- 
+/home/ubuntu/hadoop-2.5.2/etc/hadoop/mapred-site.xml:
+  file:
+    - managed
+    - source: salt://leads/yarn-files/mapred-site.xml.template
+    - user: ubuntu
+    - group: ubuntu
+    - mode: 644
+    - template: jinja
+    - defaults:
+        yarn_master_node: {{pillar['yarn']['master'][0]['private_ip']}}
+        yarn_map_task: 8
+        yarn_reduce_task: 6
+        yarn_hadoop_home: /home/ubuntu/hadoop-2.5.2
+/home/ubuntu/hadoop-2.5.2/etc/hadoop/core-site.xml:
+  file:
+    - managed
+    - source: salt://leads/yarn-files/core-site.xml.template
+    - user: ubuntu
+    - group: ubuntu
+    - mode: 644
+    - template: jinja
+    - defaults:
+        yarn_master_node: {{pillar['yarn']['master'][0]['private_ip']}}
+        yarn_hadoop_home: /home/ubuntu/hadoop-2.5.2
+/home/ubuntu/hadoop-2.5.2/etc/hadoop/yarn-site.xml:
+  file:
+    - managed
+    - source: salt://leads/yarn-files/yarn-site.xml.template
+    - user: ubuntu
+    - group: ubuntu
+    - mode: 644
+    - template: jinja
+    - defaults:
+        yarn_master_node: {{pillar['yarn']['master'][0]['private_ip']}}
+/home/ubuntu/hadoop-2.5.2/etc/hadoop/hdfs-site.xml:
+  file:
+    - managed
+    - source: salt://leads/yarn-files/hdfs-site.xml.template
+    - user: ubuntu
+    - group: ubuntu
+    - mode: 644
+    - template: jinja
+    - defaults:
+        yarn_hadoop_home: /home/ubuntu/hadoop-2.5.2
+        yarn_hdfs_replica: 1
+        yarn_hdfs_xcieversmax: 10096
+

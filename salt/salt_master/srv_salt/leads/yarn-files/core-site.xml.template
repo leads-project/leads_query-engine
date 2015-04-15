@@ -1,0 +1,20 @@
+<configuration>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>{{yarn_hadoop_home}}/hdfs</value>
+    </property>
+    <!-- property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://{1}:8020</value>
+    </property -->
+
+    <property>
+        <name>fs.default.name</name>
+        <value>hdfs://{{yarn_master_node}}:8020</value>
+    </property>
+
+    <property>
+        <name>mapred.job.tracker</name>
+        <value>{{yarn_master_node}}:9001</value>
+    </property>
+</configuration>
