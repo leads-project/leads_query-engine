@@ -10,8 +10,8 @@ base:
     - leads.unicrawl
   'leads-qe2':
     - leads.adidas_plugin_deps
-  'leads-yarn-hamm6-1':
+  'leads-yarn-hamm6-*':
     - leads.java
     - leads.yarn
-  'leads-yarn-hamm6-[12]':
-    - leads.java
+  'leads-yarn-hamm6-1':
+    - leads.unicrawl
