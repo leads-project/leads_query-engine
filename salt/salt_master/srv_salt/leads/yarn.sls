@@ -31,7 +31,7 @@
     - mode: 644
     - template: jinja
     - defaults:
-        yarn_master_node: {{pillar['yarn']['master'][0]['private_ip']}}
+        yarn_master_node: {{pillar['yarn']['masters'][0]['private_ip']}}
         yarn_map_task: 8
         yarn_reduce_task: 6
         yarn_hadoop_home: /home/ubuntu/hadoop-2.5.2
@@ -44,7 +44,7 @@
     - mode: 644
     - template: jinja
     - defaults:
-        yarn_master_node: {{pillar['yarn']['master'][0]['private_ip']}}
+        yarn_master_node: {{pillar['yarn']['masters'][0]['private_ip']}}
         yarn_hadoop_home: /home/ubuntu/hadoop-2.5.2
 /home/ubuntu/hadoop-2.5.2/etc/hadoop/yarn-site.xml:
   file:
@@ -55,7 +55,7 @@
     - mode: 644
     - template: jinja
     - defaults:
-        yarn_master_node: {{pillar['yarn']['master'][0]['private_ip']}}
+        yarn_master_node: {{pillar['yarn']['masters'][0]['private_ip']}}
 /home/ubuntu/hadoop-2.5.2/etc/hadoop/hdfs-site.xml:
   file:
     - managed
@@ -68,4 +68,33 @@
         yarn_hadoop_home: /home/ubuntu/hadoop-2.5.2
         yarn_hdfs_replica: 1
         yarn_hdfs_xcieversmax: 10096
+/home/ubuntu/hadoop-2.5.2/etc/hadoop/slaves:
+  file:
+    - managed
+    - user: ubuntu
+    - group: ubuntu
+    - mode: 644
+    - contents: {% for slave in pillar['yarn']['slaves'] %}
+                {{slave.hostname}}
+                {% endfor %}
+/home/ubuntu/hadoop-2.5.2/etc/hadoop/masters:
+  file:
+    - managed
+    - user: ubuntu
+    - group: ubuntu
+    - mode: 644
+    - contents: {% for m in pillar['yarn']['masters'] %}
+                {{m.hostname}}
+                {% endfor %}
+/etc/hosts:
+  file.append:
+    - user: root
+    - group: root
+    - mode: 644
+    - text: {% for m in pillar['yarn']['masters'] %}
+            {{m.private_ip}} {{m.hostname}}
+            {% endfor %}{% for slave in pillar['yarn']['slaves'] %}
+            {{slave.private_ip}} {{slave.hostname}}
+            {% endfor %} 
+         
 
