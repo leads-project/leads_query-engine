@@ -34,6 +34,7 @@ for pr in y:
 
             lines.append("# VM @ {0}".format(pr))
             lines.append("Host {0}".format(m))
+            lines.append("    # PrivateIP {0}".format(vm["private_ips"][0]))
             lines.append("    HostName {0}".format(vm["public_ips"][0]))
             lines.append("    User ubuntu")
             lines.append("    IdentityFile {0}".format(identity_file))
