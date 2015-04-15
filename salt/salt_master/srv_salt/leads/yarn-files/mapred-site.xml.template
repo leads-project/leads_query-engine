@@ -1,0 +1,31 @@
+<configuration>
+    <property>
+        <name>mapred.job.tracker</name>
+        <value>{{yarn_master_node}}:9001</value>
+    </property>
+
+    <property>
+        <name>mapred.map.tasks</name>
+        <value>{{yarn_map_task}}</value>
+    </property>
+
+    <property>
+        <name>mapred.reduce.tasks</name>
+        <value>{{yarn_reduce_task}}</value>
+    </property>
+
+    <property>
+        <name>mapred.system.dir</name>
+        <value>{{yarn_hadoop_home}}/hdfs/mapreduce/system</value>
+    </property>
+
+    <property>
+        <name>mapred.local.dir</name>
+        <value>{{yarn_hadoop_home}}/hdfs/mapreduce/local</value>
+    </property>
+
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
+</configuration>

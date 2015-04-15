@@ -32,6 +32,10 @@ ubuntu_large_hamm6:
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
 
+ubuntu_large_hamm6_yarn: 
+    extends: ubuntu_large_hamm6
+    security_groups: default,global_saltstack,internal_yarn
+
 ubuntu_large_dresden2:
     provider: cah-dresden2
     ssh_username: ubuntu

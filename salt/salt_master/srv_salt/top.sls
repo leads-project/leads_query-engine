@@ -1,11 +1,16 @@
 base:
-  'leads-qe*':
+  'leads-qe[123]':
     - leads.packages
     - leads.adidas_plugin_deps
     - leads.java
     - leads.setup_script
-  'leads-yarn-*':
+  'leads-yarn-[23]':
     - leads.java
     - leads.yarn
-   'leads-yarn-1':
+  'leads-yarn-1':
+    - leads.unicrawl    
+  'leads-yarn-hamm6-*':
+    - leads.java
+    - leads.yarn
+  'leads-yarn-hamm6-1':
     - leads.unicrawl

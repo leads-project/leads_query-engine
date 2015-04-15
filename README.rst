@@ -201,24 +201,54 @@ Provision
    :: 
 
      salt 'leads-yarn*' state.highstate -l debug
+     
+     
+Generate ssh_config
+-------------------------
 
-YARN (in migration to salt)
--------------------------------
+You might want to have a *ssh_config* generated from salt map files. Use the following command:
 
-On you workstation with fabric, after completing provisioning with salt.
+::
 
-1. Fill the missing IPs in ssh_config_tmp and save it to ssh_config.
+  make generate_ssh_config
+  
+Notice: it will delete the existing *ssh_config* in the project main directory and create new one.
 
-2. Provision the nodes. Install and configure YARN on the nodes pre-provision by salt:
+YARN missing steps (in migration to salt)
+------------------------------------------------
+
+On you workstation with fabric, after completing provisioning with salt. We need to setup the ssh (master can login to slaves). Fabric lets us to start and stop hadoop cluster.
+
+1. Generate ssh_config, see Section *Generate ssh_config*
+
+2. Enable ssh between master and slaves:
 
    ::
-
-     fab -H leads-yarn-1,leads-yarn-2,leads-yarn-2 \
-         prepare_hadoop --ssh-config-path=ssh_config
-
-3. With fabric, you can start and stop YARN, also you can format hdfs
   
-4. Simple testing:
+     fab -H leads-yarn-hamm6-1,leads-yarn-hamm6-2,leads-yarn-hamm6-3\
+       do_passwordless_access_to_slaves    --ssh-config-path=ssh_config
+  
+  Manual: login on leads-yarn-hamm6-1 and add fingerprints of the nodes.
+
+3. Manual fix: after loggin on yarn nodes:
+
+   ::
+    
+     sudo chown ubuntu:ubuntu * -R
+
+4. With fabric, you can start and stop YARN, also you can format hdfs
+
+   :: 
+   
+     fab -H leads-yarn-hamm6-1,leads-yarn-hamm6-2,leads-yarn-hamm6-3\
+        hadoop_format   --ssh-config-path=ssh_config
+     
+   ::
+   
+     fab -H leads-yarn-hamm6-1,leads-yarn-hamm6-2,leads-yarn-hamm6-3\
+       start_hadoop_service   --ssh-config-path=ssh_config
+  
+5. Simple testing:
     
    - run example application:
   
