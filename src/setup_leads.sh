@@ -52,14 +52,12 @@ echo 'Extracting vertx'
 mkdir -p ${path_to_install_vertx}
 tar -zxvf ${vertx_version}.tar.gz -C ${path_to_install_vertx}
 
-
-echo "***********************"
-echo 'Setting up LEADS_CURRENT_CLUSTER variable '
-command_string="export LEADS_CURRENT_CLUSTER=\`cat ~/micro_cloud.txt\`"
-search_term="LEADS_CURRENT_CLUSTER"
-file=~/.bashrc
-set_env_ "${search_term}" "${file}" "${command_string}"
-
+# echo "***********************"
+# echo 'Setting up LEADS_CURRENT_CLUSTER variable '
+# command_string="export LEADS_CURRENT_CLUSTER=\`cat ~/micro_cloud.txt\`"
+# search_term="LEADS_CURRENT_CLUSTER"
+# file=~/.bashrc
+# set_env_ "${search_term}" "${file}" "${command_string}"
 
 echo "***********************"
 echo 'Setting up vertx variables'
@@ -76,6 +74,23 @@ file=~/.bashrc
 command_string="export VERTX_MODS=~/.vertx_mods"
 set_env_  "${search_term}" "${file}" "${command_string}"
 
+search_term="dont_care"
+file=~/.bashrc
+command_string="export LEADS_QUERY_ENGINE_CONTAINER_NAME=$LEADS_QUERY_ENGINE_CONTAINER_NAME"
+
+if [ -z ${LEADS_QUERY_ENGINE_CONTAINER_NAME+x} ]; then 
+  set_env_  "${search_term}" "${file}" "${command_string}";
+fi
+
+command_string="export LEADS_QUERY_ENGINE_HADOOP_FS=$LEADS_QUERY_ENGINE_HADOOP_FS"
+if [ -z ${LEADS_QUERY_ENGINE_HADOOP_FS+x} ]; then 
+  set_env_  "${search_term}" "${file}" "${command_string}"
+fi
+
+command_string="export LEADS_QUERY_ENGINE_UCLOUD_NAME=$LEADS_QUERY_ENGINE_UCLOUD_NAME"
+if [ -z ${LEADS_QUERY_ENGINE_UCLOUD_NAME+x} ]; then 
+  set_env_  "${search_term}" "${file}" "${command_string}"
+fi
 
 echo "***********************"
 echo 'Downloading files list'
@@ -123,8 +138,6 @@ for file in `ls *.zip` do
   rm -rf ~/.vertx_mods/$dirname
   echo -n " Recreating directory, "
   mkdir -p ~/.vertx_mods/$dirname
-
-  sleep 0.1
   # Unzip the zip file from newly created directory
   echo " Unzip files"
   unzip  -q ${file} -d ~/.vertx_mods/${dirname} 
