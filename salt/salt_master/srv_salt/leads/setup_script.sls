@@ -27,6 +27,7 @@ Execute setup_leads:
       - 'OS_PASSWORD': {{ pillar['os.password'] }}
       - 'LEADS_QUERY_ENGINE_CONTAINER_NAME': 'query_engine'
       - 'LEADS_QUERY_ENGINE_START': 'Y'
+      - 'LEADS_QUERY_ENGINE_HADOOP_FS': {{pillar['yarn']['masters'][0]['private_ip']}}
    - names:
      - cd /home/ubuntu; virtualenv openstack_cli; . openstack_cli/bin/activate; pip install -r requirements.txt
      - cd /home/ubuntu; . openstack_cli/bin/activate; bash setup_leads.sh
