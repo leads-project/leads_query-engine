@@ -4,7 +4,7 @@
    - user: ubuntu
    - group: ubuntu
    - source: https://raw.githubusercontent.com/skarab7/leads_query-engine/develop/src/setup_leads.sh 
-   - source_hash: sha256=6319c50f9fe6ff6c1fe06eebec489a13dcdac4d91ae06c023d901bc604af98fd 
+   - source_hash: sha256=e6c19273fe0da045ebf7fdfc6b5019393763042100304bb2a21c02e3806310d7
    - mode: 744
 
 /home/ubuntu/requirements.txt:
