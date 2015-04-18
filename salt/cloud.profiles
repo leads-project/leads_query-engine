@@ -44,3 +44,7 @@ ubuntu_large_dresden2:
     private_networking: False
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
+
+ubuntu_large_dresden2_yarn: 
+    extends: ubuntu_large_dresden2
+    security_groups: default,global_saltstack,internal_yarn
