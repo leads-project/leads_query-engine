@@ -14,3 +14,8 @@ base:
     - leads.yarn
   'leads-yarn-hamm6-1':
     - leads.unicrawl
+  'leads-yarn-dresden2-*':
+    - leads.java
+    - leads.yarn
+  'leads-yarn-dresden2-1':
+    - leads.unicrawl
