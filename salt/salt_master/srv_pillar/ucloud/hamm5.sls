@@ -12,4 +12,4 @@ yarn:
 
 ispn:
   nodes:
-   - 10.105.0.44
+   - private_ip: 10.105.0.44

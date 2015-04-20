@@ -12,11 +12,17 @@
 
 /home/ubuntu/nutch/conf/gora.properties
    file
-    - managed
-    - source: salt://leads/unicrawl-files/gora.properties.template
-    - user: ubuntu
-    - group: ubuntu
-    - mode: 644
-    - template: jinja
-    - defaults:
-         infinispan_nodes:  {{pillar['ispn']['nodes']}}
+      - managed
+      - source: salt://leads/unicrawl-files/gora.properties.template
+      - user: ubuntu
+      - group: ubuntu
+      - mode: 644
+      - template: jinja
+      - defaults:
+         ispn_conn_string: {% for n in pillar['ispn']['nodes'] %}{{n['private_ip']}}|{% dnfor %}
+
+# patching dnutch
+/home/ubuntu/nutch/bin/dnutch:
+   file.comment:
+      - source "/mnt/cdrom/context.sh"
+      - export NUTCH_DIR="/opt/nutch"
