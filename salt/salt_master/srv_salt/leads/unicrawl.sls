@@ -10,8 +10,8 @@
       - group: ubuntu
       - if_missing: /home/ubuntu/nutch
 
-/home/ubuntu/nutch/conf/gora.properties
-   file
+/home/ubuntu/nutch/conf/gora.properties:
+   file:
       - managed
       - source: salt://leads/unicrawl-files/gora.properties.template
       - user: ubuntu
@@ -19,10 +19,16 @@
       - mode: 644
       - template: jinja
       - defaults:
-         ispn_conn_string: {% for n in pillar['ispn']['nodes'] %}{{n['private_ip']}}|{% dnfor %}
+         ispn_conn_string: {% for n in pillar['ispn']['nodes'] %}{{n['private_ip']}}:11222|{% endfor %}
 
-# patching dnutch
-/home/ubuntu/nutch/bin/dnutch:
-   file.comment:
-      - source "/mnt/cdrom/context.sh"
-      - export NUTCH_DIR="/opt/nutch"
+Comment-out source in /home/ubuntu/nutch/bin/dnutch:
+   file.replace:
+      - name: /home/ubuntu/nutch/bin/dnutch
+      - pattern: source "/mnt/cdrom/context.sh"
+      - repl: "   "
+
+Replace NUTCH_HOME in /home/ubuntu/nutch/bin/dnutch:
+   file.replace:
+      - name: /home/ubuntu/nutch/bin/dnutch
+      - pattern: export NUTCH_DIR="/opt/nutch"
+      - repl: export NUTCH_DIR="/home/ubuntu/nutch"
