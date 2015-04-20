@@ -44,7 +44,6 @@ Add gora.properties to nutch.jar:
    - group: ubuntu
    - names:
       - cd /home/ubuntu/nutch/lib; zip -d nutch-2.2.jar gora.properties;
-      - cd /home/ubuntu/nutch/lib; zip -d nutch-2.2.jar gora.properties~
       - cd /home/ubuntu/nutch; cp conf/gora.properties lib/
       - cd /home/ubuntu/nutch/lib; zip -u nutch-2.2.jar gora.properties; rm gora.properties
 
