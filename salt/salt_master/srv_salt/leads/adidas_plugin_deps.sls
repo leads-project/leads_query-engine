@@ -72,7 +72,7 @@ ldconfig:
         - names:
           - sudo ldconfig
 
-/home/ubuntu/.adidas/
+/home/ubuntu/.adidas:
     file.directory:    
         - user: ubuntu
         - group: ubuntu
