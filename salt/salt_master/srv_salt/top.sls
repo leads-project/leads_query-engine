@@ -4,7 +4,7 @@ base:
     - leads.adidas_plugin_deps
     - leads.java
     - leads.setup_script
-  'leads-yarn-[23]':
+  'leads-yarn-[123]':
     - leads.java
     - leads.yarn
   'leads-yarn-1':

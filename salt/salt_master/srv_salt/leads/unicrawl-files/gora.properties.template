@@ -1,0 +1,2 @@
+gora.datastore.default=org.apache.gora.infinipan.store.InfinispanStore
+gora.datastore.connectionstring={{ispn_conn_string}}
