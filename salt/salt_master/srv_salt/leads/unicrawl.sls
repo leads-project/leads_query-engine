@@ -32,3 +32,21 @@ Replace NUTCH_HOME in /home/ubuntu/nutch/bin/dnutch:
       - name: /home/ubuntu/nutch/bin/dnutch
       - pattern: export NUTCH_DIR="/opt/nutch"
       - repl: export NUTCH_DIR="/home/ubuntu/nutch"
+
+zip necessary to modify nutch.jar:
+    pkg.installed:
+        - pkgs:
+            - zip
+
+Add gora.properties to nutch.jar:
+  cmd.run:
+   - user: ubuntu
+   - group: ubuntu
+   - names:
+      - cd /home/ubuntu/nutch/lib; zip -d nutch-2.2.jar gora.properties;
+      - cd /home/ubuntu/nutch/lib; zip -d nutch-2.2.jar gora.properties~
+      - cd /home/ubuntu/nutch; cp conf/gora.properties lib/
+      - cd /home/ubuntu/nutch/lib; zip -u nutch-2.2.jar gora.properties; rm gora.properties
+
+
+
