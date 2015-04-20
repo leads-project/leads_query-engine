@@ -79,13 +79,15 @@ ldconfig:
         - mode: 755
         - makedirs: True
 
-/home/ubuntu/.adidas/english.all.3class.distsim.crf.ser.gz:
-    file:
-        - managed
+/home/ubuntu/.adidas/resources:
+    archive.extracted:
+        - name: /home/ubuntu/.adidas/
         - user: ubuntu
         - group: ubuntu
-        - source: https://object-hamm5.cloudandheat.com:8080/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/adidas/english.all.3class.distsim.crf.ser.gz?temp_url_sig=cc20f8b8564cf2e8693693efc556a668fd0b8d88&temp_url_expires=1431725537
-        - source_hash: sha256=122d5348a57de0e0e828e188dbd01975313759778a4dbbfd00df0a84dd77e34f
-        - mode: 644
+        - source: https://object-hamm5.cloudandheat.com:8080/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/adidas/adidas-processing-plugin-resources.tar.gz?temp_url_sig=87ba56f7b2c17471c6b1ca5611dc1cbbb70b4574&temp_url_expires=1432116293
+        - source_hash: sha256=f016a91d010efac36aebb667d45a7ee4e7251690d9692ae2520c00b244077b9d
+        - tar_options: z
+        - archive_format: tar
+        - if_missing: /home/ubuntu/.adidas/resources
 
 
