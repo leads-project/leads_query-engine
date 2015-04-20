@@ -292,21 +292,14 @@ Unicrawler
 
 3. Provision the node (see in /srv/salt/top.sls which node to provision --- now it is the YARN master)
    
-4. Configure Unicrawler:
-   
-   ::
-
-     fab -H leads-yarn-1 configure_unicrawler \
-     --ssh-config ssh_config -f fabfile_unicrawl.py
-
-5. Setup Unicrawler (prepare hadoop fs):
+4. Setup Unicrawler (prepare hadoop fs):
    
    ::
 
      fab -H leads-yarn-1 setup_unicrawler \
      --ssh-config ssh_config -f fabfile_unicrawl.py
 
-6. Start Unicrawler:
+5. Start Unicrawler:
 
    ::
 
