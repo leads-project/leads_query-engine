@@ -90,4 +90,19 @@ ldconfig:
         - archive_format: tar
         - if_missing: /home/ubuntu/.adidas/resources
 
+Prepare plugin:
+  cmd.run:
+   - user: ubuntu
+   - env:
+      - 'LEADS_ADIDAS_RESOURCES': '/home/ubuntu/.adidas/resources'
+      - 'LEADS_ADIDAS_PROPERTIES': '/home/ubuntu/.adidas/datastore'
+      - 'LEADS_ADIDAS_PYTHON': '/home/ubuntu/.adidas/python'
+      - 'LEADS_ADIDAS_LOGS': '/home/ubuntu/.adidas/logs'
+   - names:
+     - echo "LEADS_ADIDAS_RESOURCES=${LEADS_ADIDAS_RESOURCES}" >> /etc/environment
+     - echo "LEADS_ADIDAS_PROPERTIES=${LEADS_ADIDAS_PROPERTIES}" >> /etc/environment
+     - echo "LEADS_ADIDAS_PYTHON=${LEADS_ADIDAS_PYTHON}" >> /etc/environment
+     - echo "LEADS_ADIDAS_LOGS=${LEADS_ADIDAS_LOGS}" >> /etc/environment
+     - echo "here call Pawel script"
+
 
