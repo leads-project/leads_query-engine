@@ -2,7 +2,7 @@ https://github.com/Netflix/vector.git:
     git.latest:
         - user: ubuntu
         - group: ubuntu
-        - rev: master
+        - rev: stable
         - target: /home/ubuntu/vector
 
 nodejs:
