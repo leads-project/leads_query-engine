@@ -5,22 +5,24 @@ https://github.com/Netflix/vector.git:
         - rev: master
         - target: /home/ubuntu/vector
 
-bower deps:
-    pkg.installed:
-        - pkgs:
-            - npm
+nodejs:
+    pkg.installed
+
+nodejs-legacy:
+    pkg.installed
+
+npm:
+    pkg.installed
 
 bower:
-  npm.installed:
-    - user: ubuntu
-    - require:
-      - pkg: npm
-
+    npm.installed:
+        - require:
+            - pkg: npm
 
 install_vector:
     cmd.run:
         - user: ubuntu
         - group: ubuntu
-        -cwd: /home/ubuntu/vector
+        - cwd: /home/ubuntu/vector
         - names:
             - bower install
