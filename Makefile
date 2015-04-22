@@ -39,6 +39,10 @@ deploy_create_ispn_security_group:
 	nova secgroup-add-group-rule internal_ispn internal_ispn tcp 55200 55200 ; \
 	nova secgroup-add-group-rule internal_ispn internal_ispn tcp 11222 11222 ;
 
+deploy_monitoring_security_goroup:
+	nova secgroup-create monitoring_group "allow monitoring (netflix vector) traffice";\
+	nova secgroup-add-rule monitoring_group tcp 44323 44323 0.0.0.0/24;
+
 list_ucloud:
 	sudo  salt-cloud -c salt --list-providers
 
