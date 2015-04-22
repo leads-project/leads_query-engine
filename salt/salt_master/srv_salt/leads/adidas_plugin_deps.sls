@@ -62,6 +62,7 @@ https://github.com/zeromq/jzmq.git:
 Building jzmq:
     cmd.run:
         - user: ubuntu
+        - cwd: /tmp/zmq
         - names:
           - ./configure
           - make
