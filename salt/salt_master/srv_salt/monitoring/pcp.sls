@@ -1,16 +1,12 @@
-git://git.pcp.io/pcp:
-    git.latest:
-        - rev: master
-        - target: /tmp/pcp
+pcp:
+    pkg.installed
 
-install_pcp:
+Setup and restart pm_:
     cmd.run:
         - user: ubuntu
-        - group: ubuntu
-        - cwd: /tmp/pcp
-        - names:
-            - ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
-            - make
-            - sudo make install
-        - watch:
-            - git: git://git.pcp.io/pcp
+        - names: 
+             - sudo update-rc.d pmcd defaults
+             - sudo update-rc.d pmlogger defaults
+             - sudo service pmcd restart
+             - sudo service pmlogger restart 
+

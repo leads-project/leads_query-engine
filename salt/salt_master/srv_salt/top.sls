@@ -21,3 +21,4 @@ base:
     - leads.unicrawl
   'leads-saltmaster':
     - monitoring.vector
+    - monitoring.pcp
