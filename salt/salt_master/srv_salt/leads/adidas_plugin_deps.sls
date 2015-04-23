@@ -55,8 +55,7 @@ Building jzmq deps:
           - git-core
 
 https://github.com/zeromq/jzmq.git:
-    git.present:
-        - user: ubuntu
+    git.latest:
         - rev: master
         - target: /tmp/jzmq
 
@@ -65,7 +64,9 @@ Building jzmq:
         - user: ubuntu
         - cwd: /tmp/jzmq
         - names:
-          - bash -c "./autogen.sh ; ./configure;  make ; sudo make install"
+          - sudo bash -c "./autogen.sh ; ./configure;  make ; make install"
+        - require:
+          - git: https://github.com/zeromq/jzmq.git
 
 ldconfig:
     cmd.run:
