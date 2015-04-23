@@ -55,21 +55,20 @@ Building jzmq deps:
           - git-core
 
 https://github.com/zeromq/jzmq.git:
-    git.latest:
+    git.present:
+        - user: ubuntu
         - rev: master
-        - target: /tmp/zmq
+        - target: /tmp/jzmq
 
 Building jzmq:
     cmd.run:
         - user: ubuntu
-        - cwd: /tmp/zmq
+        - cwd: /tmp/jzmq
         - names:
-          - ./configure
-          - make
-          - sudo make install
+          - bash -c "./autogen.sh ; ./configure;  make ; sudo make install"
 
 ldconfig:
-    cmd.rum:
+    cmd.run:
         - names:
           - sudo ldconfig
 
@@ -92,7 +91,7 @@ ldconfig:
         - if_missing: /home/ubuntu/.adidas/resources
 
 https://github.com/vagvaz/leads-query-processor/:
-    git.latest:
+    git.present:
         - depth: 1
         - rev: adi
         - target: /home/ubuntu/.adidas/leads-query-processor
