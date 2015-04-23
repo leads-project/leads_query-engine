@@ -62,6 +62,7 @@ https://github.com/zeromq/jzmq.git:
 Building jzmq:
     cmd.run:
         - user: ubuntu
+        - cwd: /tmp/zmq
         - names:
           - ./configure
           - make
@@ -89,5 +90,21 @@ ldconfig:
         - tar_options: z
         - archive_format: tar
         - if_missing: /home/ubuntu/.adidas/resources
+
+https://github.com/vagvaz/leads-query-processor/:
+    git.latest:
+        - depth: 1
+        - rev: adi
+        - target: /home/ubuntu/.adidas/leads-query-processor
+      
+/etc/environment:
+    file.append:
+        - text:
+            - LEADS_ADIDAS_RESOURCES=/home/ubuntu/.adidas/resources
+            - LEADS_ADIDAS_PROPERTIES=/home/ubuntu/.adidas/leads-query-processor/plugins/src/main/java/eu/leads/datastore
+            - LEADS_ADIDAS_PYTHON=/home/ubuntu/.adidas/leads-query-processor/nqe/system-plugins/adidas-processing-plugin/src/main/python/
+            - LEADS_ADIDAS_LOGS=/home/ubuntu/.adidas/logs
+
+
 
 
