@@ -355,6 +355,39 @@ Infinispan (in migration to salt)
      ISPN000094: Received new cluster view for channel 26001: [leads-ispn-1/26001|1] 
      (2) [leads-ispn-1/26001, leads-ispn-2/26001]
 
+Monitoring and evaluation
+===========================
+
+We install pcp (http://pcp.io/docs/pcpintro.html) on all nodes with salt (see *salt/salt_master/srv_stalt/monitoring/*).
+
+Basic commands
+-------------------
+
+From  http://pcp.io/docs/pcpintro.html :
+
+- *pmstat* - high level overview
+- *pminfo* - get all supported probes 
+- *pmval* - observe the value of a given probe, e.g.:
+
+  ::
+
+    pmval mem.freemem
+    # or grabbing values remotely
+    pval mem.freemen -h 10.105.0.44
+
+- *pmlogger* - generates PCP archives of performance metrics suitable for replay
+
+  :: 
+
+    pmlogger -h localhost  -T 90sec -t 1sec myarchive 
+
+Additionaly on some nodes (see *salt/salt_master/srv_salt/top.sls*), you have *vector* (https://github.com/Netflix/vector/) installed. Please use port forwarding to access it. Below, you have an example for *leads-saltmaster*:
+
+::
+
+  ssh -L 8080:127.0.0.1:8080  -L 44323:127.0.0.1:44323 -F ssh_config leads-saltmaster
+
+
 Useful info
 ==================
 
