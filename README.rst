@@ -381,12 +381,16 @@ From  http://pcp.io/docs/pcpintro.html :
 
     pmlogger -h localhost  -T 90sec -t 1sec myarchive 
 
-Additionaly on some nodes (see *salt/salt_master/srv_salt/top.sls*), you have *vector* (https://github.com/Netflix/vector/) installed. Please use port forwarding to access it. Below, you have an example for *leads-saltmaster*:
+Vector - adhoc monitoring for DEV
+------------------------------------------
+
+Additional on some nodes (see *salt/salt_master/srv_salt/top.sls*), you have *vector* (https://github.com/Netflix/vector/) installed. Please use port forwarding to access it. Below, you have an example for *leads-saltmaster*:
 
 ::
 
   ssh -L 8080:127.0.0.1:8080  -L 44323:127.0.0.1:44323 -F ssh_config leads-saltmaster
 
+Now, open your browser and type *127.0.0.1*. You should a set of graphs for basic metrics. It is very good way to watch over experiments. 
 
 Useful info
 ==================
