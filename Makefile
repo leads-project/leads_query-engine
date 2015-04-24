@@ -41,7 +41,7 @@ deploy_create_ispn_security_group:
 
 deploy_monitoring_security_goroup:
 	nova secgroup-create monitoring_group "allow monitoring (netflix vector) traffice";\
-	nova secgroup-add-rule monitoring_group tcp 44323 44323 0.0.0.0/24;
+	nova secgroup-add-group-rule monitoring_group  monitoring_group tcp 44323 44323;
 
 list_ucloud:
 	sudo  salt-cloud -c salt --list-providers
