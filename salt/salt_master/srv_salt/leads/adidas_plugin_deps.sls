@@ -92,7 +92,8 @@ ldconfig:
         - if_missing: /home/ubuntu/.adidas/resources
 
 https://github.com/vagvaz/leads-query-processor/:
-    git.present:
+    git.latest:
+        - user: ubuntu
         - depth: 1
         - rev: adi
         - target: /home/ubuntu/.adidas/leads-query-processor
