@@ -363,7 +363,9 @@ We install pcp (http://pcp.io/docs/pcpintro.html) on all nodes with salt (see *s
 Basic commands
 -------------------
 
-From  `pcpintro <http://pcp.io/docs/pcpintro.html>`_ and `pcpbook <http://pcp.io/books/PCP_UAG/html-single/#LE13618-PARENT>`_:
+Please read first `pcpguide <http://www.pcp.io/pcp.git/man/html/guide.html>`_, it provides a simple guideline on how to use pcp.
+
+ From  `pcpintro <http://pcp.io/docs/pcpintro.html>`_ and `pcpbook <http://pcp.io/books/PCP_UAG/html-single/#LE13618-PARENT>`_:
 
 - *pmstat* - high level overview
 - *pminfo* - get all supported probes 
@@ -374,12 +376,6 @@ From  `pcpintro <http://pcp.io/docs/pcpintro.html>`_ and `pcpbook <http://pcp.io
     pmval mem.freemem
     # or grabbing values remotely
     pval mem.freemen -h 10.105.0.44
-
-- *pmlogger* - generates PCP archives of performance metrics suitable for replay
-
-  :: 
-
-    pmlogger -h localhost  -T 90sec -t 1sec myarchive 
 
 - *pmcollect* - Statistics collection tool with good coverage of a number of Linux kernel subsystem
 
