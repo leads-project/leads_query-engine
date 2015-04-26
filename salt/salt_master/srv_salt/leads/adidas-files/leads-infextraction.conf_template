@@ -1,0 +1,26 @@
+description "starts leads information extraction scripts"
+
+author "Wojciech Barczynski"
+
+start on (net-device-up and local-filesystems and runlevel [2345])
+stop on runlevel [016]
+
+normal exit 0 TERM
+
+# respawn up to 10 times every 5 seconds 
+respawn
+respawn limit 10 5
+
+script
+        export PYTHONPATH=$PYTHONPATH:$LEADS_ADIDAS_PYTHON
+        sleep 3
+        /usr/bin/python2.7 -m eu.leads.infext.python.CLAPI.pzs tcp://{{eads_infext_listen_ip_1}}:{{leads_infext_port_1}}
+end script
+
+post-start script
+#
+end script
+
+pre-stop script
+#
+end script
