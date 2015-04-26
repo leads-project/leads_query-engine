@@ -363,7 +363,7 @@ We install pcp (http://pcp.io/docs/pcpintro.html) on all nodes with salt (see *s
 Basic commands
 -------------------
 
-From  http://pcp.io/docs/pcpintro.html :
+From  `pcpintro <http://pcp.io/docs/pcpintro.html>`_ and `pcpbook <http://pcp.io/books/PCP_UAG/html-single/#LE13618-PARENT>`_:
 
 - *pmstat* - high level overview
 - *pminfo* - get all supported probes 
@@ -380,6 +380,15 @@ From  http://pcp.io/docs/pcpintro.html :
   :: 
 
     pmlogger -h localhost  -T 90sec -t 1sec myarchive 
+
+- *pmcollect* - Statistics collection tool with good coverage of a number of Linux kernel subsystem
+
+  ::
+
+    #<--------CPU--------><----------Disks-----------><----------Network---------->
+    #cpu sys inter  ctxsw KBRead  Reads KBWrit Writes KBIn  PktIn  KBOut  PktOut
+    36  22   606    572     0      0      0      0    2     24      2     22
+    34  16   547    447     0      0     28      2    0      2      0      1 
 
 Vector - adhoc monitoring for DEV
 ------------------------------------------
