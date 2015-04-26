@@ -119,6 +119,14 @@ https://github.com/vagvaz/leads-query-processor/:
         leads_adidas_infext_listen_ip: 127.0.0.1
         leads_adidas_infext_port: 5559
 
+leads-infextraction-1:
+  service:
+    - running
+    - enable: True
+    - reload: True
+    - require: 
+      - file: /etc/init/leads-infextraction-1.conf
+
 /etc/init/leads-infextraction-2.conf:
   file:
     - managed
@@ -132,7 +140,13 @@ https://github.com/vagvaz/leads-query-processor/:
         leads_adidas_infext_listen_ip: 127.0.0.1
         leads_adidas_infext_port: 6000
 
-
+leads-infextraction-2:
+  service:
+    - running
+    - enable: True
+    - reload: True
+    - require: 
+      - file: /etc/init/leads-infextraction-2.conf
 
 
 
