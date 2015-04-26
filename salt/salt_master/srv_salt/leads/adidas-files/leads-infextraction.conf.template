@@ -12,9 +12,9 @@ respawn
 respawn limit 10 5
 
 script
-        export PYTHONPATH=$PYTHONPATH:$LEADS_ADIDAS_PYTHON
+        export PYTHONPATH=$PYTHONPATH:{{leads_adidas_python}}
         sleep 3
-        /usr/bin/python2.7 -m eu.leads.infext.python.CLAPI.pzs tcp://{{eads_infext_listen_ip_1}}:{{leads_infext_port_1}}
+        /usr/bin/python2.7 -m eu.leads.infext.python.CLAPI.pzs tcp://{{leads_adidas_infext_listen_ip}}:{{leads_adidas_infext_port}}
 end script
 
 post-start script

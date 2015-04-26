@@ -106,6 +106,33 @@ https://github.com/vagvaz/leads-query-processor/:
             - LEADS_ADIDAS_PYTHON=/home/ubuntu/.adidas/leads-query-processor/nqe/system-plugins/adidas-processing-plugin/src/main/python/
             - LEADS_ADIDAS_LOGS=/home/ubuntu/.adidas/logs
 
+/etc/init/leads-infextraction-1.conf:
+  file:
+    - managed
+    - source: salt://leads/adidas-files/leads-infextraction.conf.template
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - defaults:
+        leads_adidas_python: /home/ubuntu/.adidas/leads-query-processor/nqe/system-plugins/adidas-processing-plugin/src/main/python/
+        leads_adidas_infext_listen_ip: 127.0.0.1
+        leads_adidas_infext_port: 5559
+
+/etc/init/leads-infextraction-2.conf:
+  file:
+    - managed
+    - source: salt://leads/adidas-files/leads-infextraction.conf.template
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - defaults:
+        leads_adidas_python: /home/ubuntu/.adidas/leads-query-processor/nqe/system-plugins/adidas-processing-plugin/src/main/python/
+        leads_adidas_infext_listen_ip: 127.0.0.1
+        leads_adidas_infext_port: 6000
+
+
 
 
 
