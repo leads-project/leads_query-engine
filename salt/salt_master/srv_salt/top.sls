@@ -1,5 +1,5 @@
 base:
-  'leads-qe[123]':
+  'leads-qe[12345]':
     - leads.packages
     - leads.adidas_plugin_deps
     - leads.java
