@@ -7,3 +7,6 @@ ubuntu_large_hamm6:
 ubuntu_large_dresden2:
     - leads-qe3
 
+ubuntu_large_dresden2:
+    - leads-qe4
+
