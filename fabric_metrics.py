@@ -67,8 +67,14 @@ def start_tcpflow():
     cmd = "tcpflow -i eth0"
     with cd(tcpflow_output_dir):
         run("sudo -b nohup {0}".format(cmd))
-        
+
+
 def stop_tcpflow():
     """
     """
     sudo("pkill -f 'nohup tcpflow -i eth0'")
+
+
+def run_tcpflow_backup():
+    """
+    """
