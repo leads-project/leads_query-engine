@@ -40,7 +40,7 @@ deploy_create_ispn_security_group:
 	nova secgroup-add-group-rule internal_ispn internal_ispn tcp 11222 11222 ;
 
 deploy_monitoring_security_group:
-	nova secgroup-create monitoring_group "allow monitoring (netflix vector) traffice";\
+	nova secgroup-create monitoring_group "allow monitoring (netflix vector) trafic";\
 	nova secgroup-add-group-rule monitoring_group  monitoring_group tcp 44323 44323;
 
 deploy_monitoring_security_group_open:
