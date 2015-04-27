@@ -6,13 +6,15 @@ env.forward_agent = True
 env.use_ssh_config = True
 
 backup_tool_dir = "/home/ubuntu/metrics/backup"
+tcpflow_output_dir = "/home/ubuntu/metrics/tcpflow"
 
 # use -1, -2, empty - means the default value -1 is used
-backup_pcp_mtime_value = ""
+backup_pcp_mtime_value = "-7"
 
 
 def install_pcp_backup_script():
 
+    run("sudo apt-get install python-virtualenv python-pip python-dev -qq")
     run("mkdir -p {0}".format(backup_tool_dir))
 
     for f in ["requirements.txt", "copy_pcp_to_swift.sh"]:
@@ -54,3 +56,19 @@ def run_pcp_backup_script():
                    PCP_FILES_MTIME=backup_pcp_mtime_value):
         with cd(backup_tool_dir):
             run("{0} ; {1}".format(prefix, backup_cmd))
+
+
+def install_tcpflow():
+    sudo("sudo apt-get install tcpflow -qq")
+
+
+def start_tcpflow():
+    run("mkdir -p {}".format(tcpflow_output_dir))
+    cmd = "tcpflow -i eth0"
+    with cd(tcpflow_output_dir):
+        run("sudo -b nohup {0}".format(cmd))
+        
+def stop_tcpflow():
+    """
+    """
+    sudo("pkill -f 'nohup tcpflow -i eth0'")
