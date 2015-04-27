@@ -4,7 +4,7 @@ Backup pcp to swift container
 
 (TODO: create salt for that, currently implemented in fabric_metrics.py)
 
-**Notice**: default it will upload only pcp files from the last 24 hours.
+**Notice**: default it will upload only pcp files from the last 24 hours (you can modify it in *fabric_metrcs.py* or with *PCP_FILES_MTIME* environment variable.
 
 1. Put the script *copy_pcp_to_swift.sh* to /home/ubuntu/metrics/backup 
 

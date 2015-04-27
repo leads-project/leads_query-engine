@@ -6,7 +6,9 @@ env.forward_agent = True
 env.use_ssh_config = True
 
 backup_tool_dir = "/home/ubuntu/metrics/backup"
-backup_pcp_from_last_n_days = 2
+
+# use -1, -2, empty - means the default value -1 is used
+backup_pcp_mtime_value = ""
 
 
 def install_pcp_backup_script():
@@ -48,6 +50,7 @@ def run_pcp_backup_script():
     with shell_env(OS_USERNAME=container_user,
                    OS_TENANT_NAME=container_tenant,
                    OS_PASSWORD=container_password,
-                   OS_AUTH_URL=container_url):
+                   OS_AUTH_URL=container_url,
+                   PCP_FILES_MTIME=backup_pcp_mtime_value):
         with cd(backup_tool_dir):
             run("{0} ; {1}".format(prefix, backup_cmd))
