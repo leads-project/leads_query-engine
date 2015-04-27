@@ -2,7 +2,7 @@
 Backup pcp to swift container
 =================================
 
-(TODO: create salt for that)
+(TODO: create salt for that, currently implemented in fabric_metrics.py)
 
 **Notice**: default it will upload only pcp files from the last 24 hours.
 
