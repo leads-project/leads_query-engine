@@ -12,12 +12,13 @@ tcpflow_output_dir = "/home/ubuntu/metrics/tcpflow"
 backup_pcp_mtime_value = "-7"
 
 
-def install_pcp_backup_script():
+def install_metrics_backup_script():
 
     run("sudo apt-get install python-virtualenv python-pip python-dev -qq")
     run("mkdir -p {0}".format(backup_tool_dir))
 
-    for f in ["requirements.txt", "copy_pcp_to_swift.sh"]:
+    for f in ["requirements.txt", "copy_pcp_to_swift.sh",
+              "copy_tcpflow_to_swift.sh"]:
         local_f = "tools/metrics/backup/{}".format(f)
         remote_f = "{0}/{1}".format(backup_tool_dir, f)
         _upload_with_scp(local_f, remote_f)
@@ -40,22 +41,25 @@ def _upload_with_scp(what, where):
 
 
 def run_pcp_backup_script():
+    backup_cmd = "bash copy_pcp_to_swift.sh"
+    _execute_swift_backup_cmd(backup_cmd)
 
+
+def _execute_swift_backup_cmd(cmd):
+    prefix = "source openstack_cli/bin/activate"
+    
     container_user = os.environ["OS_USERNAME"]
     container_tenant = os.environ["OS_TENANT_NAME"]
     container_password = os.environ["OS_PASSWORD"]
     container_url = os.environ["OS_AUTH_URL"]
-
-    prefix = "source openstack_cli/bin/activate"
-    backup_cmd = "bash copy_pcp_to_swift.sh"
-
+    
     with shell_env(OS_USERNAME=container_user,
                    OS_TENANT_NAME=container_tenant,
                    OS_PASSWORD=container_password,
                    OS_AUTH_URL=container_url,
                    PCP_FILES_MTIME=backup_pcp_mtime_value):
         with cd(backup_tool_dir):
-            run("{0} ; {1}".format(prefix, backup_cmd))
+            run("{0} ; {1}".format(prefix, cmd))
 
 
 def install_tcpflow():
@@ -78,3 +82,5 @@ def stop_tcpflow():
 def run_tcpflow_backup():
     """
     """
+    backup_cmd = "bash copy_tcpflow_to_swift.sh"
+    _execute_swift_backup_cmd(backup_cmd)
