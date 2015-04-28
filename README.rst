@@ -395,6 +395,13 @@ Additional on some nodes (see *salt/salt_master/srv_salt/top.sls*), you have *ve
 
   ssh -L 8080:127.0.0.1:8080  -L 44323:127.0.0.1:44323 -F ssh_config leads-saltmaster
 
+  # TODO: put to upstart script
+  # now to go
+  cd ~/vector/app/
+  # to make it running even if you log out
+  tmux new -n leads_vector
+  python -m SimpleHTTPServer 8080
+
 Now, open your browser and type *127.0.0.1*. You should a set of graphs for basic metrics. It is very good way to watch over experiments. 
 
 Useful info
