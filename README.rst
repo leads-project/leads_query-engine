@@ -358,10 +358,14 @@ Infinispan (in migration to salt)
 Monitoring and evaluation
 ===========================
 
+
+Node metrics
+------------------
+
 We install pcp (http://pcp.io/docs/pcpintro.html) on all nodes with salt (see *salt/salt_master/srv_stalt/monitoring/*).
 
 Basic commands
--------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Please read first `pcpguide <http://www.pcp.io/pcp.git/man/html/guide.html>`_, it provides a simple guideline on how to use pcp.
 
@@ -387,7 +391,7 @@ Please read first `pcpguide <http://www.pcp.io/pcp.git/man/html/guide.html>`_, i
     34  16   547    447     0      0     28      2    0      2      0      1 
 
 Vector - adhoc monitoring for DEV
-------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Additional on some nodes (see *salt/salt_master/srv_salt/top.sls*), you have *vector* (https://github.com/Netflix/vector/) installed. Please use port forwarding to access it. Below, you have an example for *leads-saltmaster*:
 
@@ -403,6 +407,60 @@ Additional on some nodes (see *salt/salt_master/srv_salt/top.sls*), you have *ve
   python -m SimpleHTTPServer 8080
 
 Now, open your browser and type *127.0.0.1*. You should a set of graphs for basic metrics. It is very good way to watch over experiments. 
+
+Backup pcp metrics to swift container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Install backup scripts
+
+  ::
+
+    fab -H  leads-qe1  --ssh-config ssh_config  -f fabric_metrics  install_metrics_backup_script   -P
+
+2. Back up file to swift container (*experiments/pcp*):
+   
+  ::
+
+    # openrc from ucloud that hosts swift container
+    source openrc
+    fab -H leads-qe1 --ssh-config ssh_config  -f fabric_metrics run_pcp_backup_script -P
+
+
+Network monitoring
+-----------------------
+
+For network monitoring and tcpflow analysis, we deploy tcpflow. We use fabric script to manage tcpflow. Notice: tcpflow archives grow pretty fast. We capture all incomming and outgoing traffic.
+
+1. Install:
+   
+   ::
+
+     fab -H leads-qe1 --ssh-config ssh_config  -f fabric_metrics install_tcpflow -P
+
+2. Run:
+   
+   ::
+
+     fab -H leads-qe1 --ssh-config ssh_config  -f fabric_metrics start_tcpflow -P
+
+
+3. Stop:
+
+   ::
+
+     fab -H leads-qe1 --ssh-config ssh_config  -f fabric_metrics stop_tcpflow -P
+   
+
+4. Copy tcpflow files to swift container (*experiments/tcpflow*):
+   
+   ::
+
+     fab -H leads-qe1 --ssh-config ssh_config  -f fabric_metrics run_tcpflow_backup -P
+
+Plotting
+-------------
+
+See *LEADS SVN*.
 
 Useful info
 ==================
