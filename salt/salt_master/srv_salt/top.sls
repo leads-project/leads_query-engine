@@ -19,3 +19,8 @@ base:
     - leads.yarn
   'leads-yarn-dresden2-1':
     - leads.unicrawl
+  '*':
+    - monitoring.pcp
+  'leads-saltmaster':
+    - monitoring.vector
+  

@@ -355,6 +355,55 @@ Infinispan (in migration to salt)
      ISPN000094: Received new cluster view for channel 26001: [leads-ispn-1/26001|1] 
      (2) [leads-ispn-1/26001, leads-ispn-2/26001]
 
+Monitoring and evaluation
+===========================
+
+We install pcp (http://pcp.io/docs/pcpintro.html) on all nodes with salt (see *salt/salt_master/srv_stalt/monitoring/*).
+
+Basic commands
+-------------------
+
+Please read first `pcpguide <http://www.pcp.io/pcp.git/man/html/guide.html>`_, it provides a simple guideline on how to use pcp.
+
+ From  `pcpintro <http://pcp.io/docs/pcpintro.html>`_ and `pcpbook <http://pcp.io/books/PCP_UAG/html-single/#LE13618-PARENT>`_:
+
+- *pmstat* - high level overview
+- *pminfo* - get all supported probes 
+- *pmval* - observe the value of a given probe, e.g.:
+
+  ::
+
+    pmval mem.freemem
+    # or grabbing values remotely
+    pval mem.freemen -h 10.105.0.44
+
+- *pmcollect* - Statistics collection tool with good coverage of a number of Linux kernel subsystem
+
+  ::
+
+    #<--------CPU--------><----------Disks-----------><----------Network---------->
+    #cpu sys inter  ctxsw KBRead  Reads KBWrit Writes KBIn  PktIn  KBOut  PktOut
+    36  22   606    572     0      0      0      0    2     24      2     22
+    34  16   547    447     0      0     28      2    0      2      0      1 
+
+Vector - adhoc monitoring for DEV
+------------------------------------------
+
+Additional on some nodes (see *salt/salt_master/srv_salt/top.sls*), you have *vector* (https://github.com/Netflix/vector/) installed. Please use port forwarding to access it. Below, you have an example for *leads-saltmaster*:
+
+::
+
+  ssh -L 8080:127.0.0.1:8080  -L 44323:127.0.0.1:44323 -F ssh_config leads-saltmaster
+
+  # TODO: put to upstart script
+  # now to go
+  cd ~/vector/app/
+  # to make it running even if you log out
+  tmux new -n leads_vector
+  python -m SimpleHTTPServer 8080
+
+Now, open your browser and type *127.0.0.1*. You should a set of graphs for basic metrics. It is very good way to watch over experiments. 
+
 Useful info
 ==================
 
