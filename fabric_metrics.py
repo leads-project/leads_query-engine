@@ -9,7 +9,7 @@ backup_tool_dir = "/home/ubuntu/metrics/backup"
 tcpflow_output_dir = "/home/ubuntu/metrics/tcpflow"
 
 # use -1, -2, empty - means the default value -1 is used
-backup_pcp_mtime_value = "-7"
+backup_pcp_mtime_value = "-3"
 
 
 def install_metrics_backup_script():
@@ -47,12 +47,12 @@ def run_pcp_backup_script():
 
 def _execute_swift_backup_cmd(cmd):
     prefix = "source openstack_cli/bin/activate"
-    
+
     container_user = os.environ["OS_USERNAME"]
     container_tenant = os.environ["OS_TENANT_NAME"]
     container_password = os.environ["OS_PASSWORD"]
     container_url = os.environ["OS_AUTH_URL"]
-    
+
     with shell_env(OS_USERNAME=container_user,
                    OS_TENANT_NAME=container_tenant,
                    OS_PASSWORD=container_password,
@@ -68,7 +68,7 @@ def install_tcpflow():
 
 def start_tcpflow():
     run("mkdir -p {}".format(tcpflow_output_dir))
-    cmd = "tcpflow -i eth0"
+    cmd = "tcpflow -i eth0 -FT"
     with cd(tcpflow_output_dir):
         run("sudo -b nohup {0}".format(cmd))
 
@@ -76,7 +76,7 @@ def start_tcpflow():
 def stop_tcpflow():
     """
     """
-    sudo("pkill -f 'nohup tcpflow -i eth0'")
+    sudo("pkill -15 -f '^tcpflow -i eth0'")
 
 
 def run_tcpflow_backup():
