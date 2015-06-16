@@ -157,17 +157,24 @@ tera_validate_dir = '/tmp/tera_validate'
 @roles_host_string_based('masters')
 def hadoop_example_terrasort_gen():
     hadoop_home = hadoop_home_dir
-    run("rm -rf " + tera_input_dir)
+    _remove_dir_local_and_hdfs(tera_input_dir)
+
     with cd(hadoop_home):
         with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'):
             run('bin/yarn jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.2.jar'
                 '  teragen  ' + str(tera_size) + ' ' + tera_input_dir)
 
 
+def _remove_dir_local_and_hdfs(dir_name):
+    run("sudo rm -rf {0}".format(dir_name))
+    with settings(shell="/bin/bash -l -i -c"):
+        run("source ~/.bashrc; hadoop fs -rm -R {0} || true".format(dir_name))
+
+
 @roles_host_string_based('masters')
 def hadoop_example_terrasort_run():
     hadoop_home = hadoop_home_dir
-    run("rm -rf {0}".format(tera_output_dir))
+    _remove_dir_local_and_hdfs(tera_output_dir)
     with cd(hadoop_home):
         with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'):
             run('bin/yarn jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.2.jar'
@@ -177,7 +184,7 @@ def hadoop_example_terrasort_run():
 @roles_host_string_based('masters')
 def hadoop_example_terrasort_validate():
     hadoop_home = hadoop_home_dir
-    run("rm -rf {0}".format(tera_validate_dir))
+    _remove_dir_local_and_hdfs(tera_validate_dir)
     with cd(hadoop_home):
         with shell_env(JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'):
             run('bin/yarn jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.2.jar'
