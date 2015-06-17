@@ -462,6 +462,37 @@ Plotting
 
 See *LEADS SVN*.
 
+
+Experiments
+==================
+
+Testing YARN
+--------------------------
+
+Terasort
+~~~~~~~~~~~~
+
+::
+
+  # stop
+
+  fab -Hleads-yarn-dresden2-1 hadoop_example_terrasort_gen --ssh-config-path=ssh_config
+  fab -Hleads-yarn-dresden2-1 hadoop_example_terrasort_run --ssh-config-path=ssh_config
+  fab -Hleads-yarn-dresden2-1 hadoop_example_terrasort_validate --ssh-config-path=ssh_config
+
+Example:
+
+::
+
+  for yarn_master in  leads-yarn-dresden2-1 leads-yarn-hamm6-1 leads-yarn-1 ; do
+     for step in hadoop_example_terrasort_gen hadoop_example_terrasort_run hadoop_example_terrasort_validate ; do
+         echo "["${yarn_master}"] Performing: " ${step};
+         fab -H  ${yarn_master}  ${step} --ssh-config-path=ssh_config > result_${step}_${yarn_master}.txt;
+      done;
+  done;
+
+
+
 Useful info
 ==================
 
