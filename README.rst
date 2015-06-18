@@ -94,6 +94,8 @@ Basic functionality
     # get all info about saltmaster
     sudo salt-cloud -c salt  -m salt/leads_saltmaster.map --query
 
+- apply any changes from *salt/salt_master/master_config*
+
 Prepare salt-master
 ---------------------
 
