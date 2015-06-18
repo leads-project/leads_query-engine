@@ -25,3 +25,17 @@ do_not_build_{{unnecessary_module}}:
     - repl: ' '
 {% endfor %}
 
+Building ycsb:
+    cmd.run:
+        - user: ubuntu
+        - group: ubuntu
+        - cwd: /home/ubuntu/ycsb
+        - env:
+           - 'M2_HOME': /usr/lib/apache-maven/
+        - names:
+           - /usr/lib/apache-maven/bin/mvn package  -Dskip.tests
+    require:
+        - git: https://github.com/brianfrankcooper/YCSB.git
+
+ 
+
