@@ -493,7 +493,10 @@ Example:
       done;
   done;
 
+Testing ISPN/Assemble
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+You have salt state available to install YCSB: *evaluation/ycsb_ispn*.
 
 Useful info
 ==================
