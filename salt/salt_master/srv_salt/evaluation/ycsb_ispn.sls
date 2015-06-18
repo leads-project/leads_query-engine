@@ -1,18 +1,21 @@
-gitfs_remotes:
-    - https://github.com/saltstack-formulas/maven-formula.git
+git-core:
+    pkg.installed
 
-adidas system deps:
-    pkg.installed:
-              - git-core
-
-git://github.com/brianfrankcooper/YCSB.git:
+https://github.com/brianfrankcooper/YCSB.git:
     git.latest:
         - rev: master
-        - target: /tmp/ycsb
+        - target: /home/ubuntu/ycsb
 
-maven:
-    """
-    """
+/home/ubuntu/ycsb:
+  file.directory:
+    - user: ubuntu
+    - group: ubuntu
+    - recurse:
+      - user
+      - group
+
+include:
+   - maven
 
 
 
