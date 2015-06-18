@@ -1,6 +1,7 @@
 base:
   'leads-yarn-*':
     - leads.yarn
+    - leads.ycsb
   'leads-qe*':
     - leads.openstack
   'leads-qe1':
