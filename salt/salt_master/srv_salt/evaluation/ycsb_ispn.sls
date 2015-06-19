@@ -16,7 +16,7 @@ https://github.com/otrack/Leads-infinispan.git:
 
 {{pillar['ycsb.git']}}:
     git.latest:
-        - rev: master
+        - rev: build_only_for_cassandra_and_infinispan
         - target: /home/ubuntu/ycsb
 
 /home/ubuntu/ycsb:
