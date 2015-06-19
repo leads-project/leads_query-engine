@@ -52,7 +52,7 @@ Building ycsb:
         - names:
            - /usr/lib/apache-maven/bin/mvn package  -Dskip.tests
     require:
-        - git: https://github.com/brianfrankcooper/YCSB.git
+        - git: {{pillar['ycsb.git']}}
         - cmd.run: Install leads-infinispan
  
 
