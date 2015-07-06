@@ -100,8 +100,12 @@ Basic functionality
     sudo salt-cloud -c salt  -m salt/leads_query-engine.map --query
 
   The *map* files define mappings between ucloud and VMs that should be spawn there. Without **--query**, salt-cloud will create VMs if they are missing from a target installation.
+  
+- if the VMs are already there, you might want to have ssh_config to connect easily to them. Use the following command to generate it:
 
-- apply any changes from *salt/salt_master/master_config*
+  ::
+  
+    make generate_ssh_config
 
 Prepare salt-master
 ---------------------
@@ -146,6 +150,8 @@ TODO: move the salt master to git-based back-end. Use hostname for the salt mast
 
      mkdir -p /srv/pillar
      cp -R salt/salt_master/srv_pillar/* /srv/pillar
+     
+6. Apply any changes from *salt/salt_master/master_config* to */etc/salt/master*
 
 Create VMs
 ------------------------
