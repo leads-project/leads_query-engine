@@ -11,4 +11,7 @@ ubuntu_large_dresden2:
     - leads-qe6
     - leads-qe7
 
+ubuntu_large_dd1a:
+    - leads-qe8
+    - leads-qe9
 
