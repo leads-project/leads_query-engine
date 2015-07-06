@@ -18,7 +18,7 @@ Basic setup
    
    ::
 
-     sudo pip install -r requirements
+     sudo pip install -r requirements.txt
 
 2. create a virtualenv (you need to have *virtualenv* and *virtualenvwrapper* installed)
 
@@ -44,6 +44,8 @@ Basic setup
      source openrc
 
      make deploy_saltstack_generate_config
+
+   You should now have conf files in *salt/cloud.providers.d/* for each of LEADS uclouds.
 
 Prepare micro-cloud
 -----------------------
