@@ -48,3 +48,14 @@ ubuntu_large_dresden2:
 ubuntu_large_dresden2_yarn: 
     extends: ubuntu_large_dresden2
     security_groups: default,global_saltstack,internal_yarn
+
+ubuntu_large_dd1a:
+    provider: cah-dd1a
+    ssh_username: ubuntu
+    size: cloudcompute.l
+    image: Ubuntu 14.04 LTS x64
+    private_networking: False
+    ssh_key_name: leads_cluster
+    security_groups: default,global_saltstack
+
+
