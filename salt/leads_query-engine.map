@@ -13,5 +13,7 @@ ubuntu_large_dresden2:
 
 ubuntu_large_dd1a:
     - leads-qe8
+
+vertx_ready_dd1a:
     - leads-qe9
 
