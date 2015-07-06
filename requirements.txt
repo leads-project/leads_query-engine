@@ -1,6 +1,5 @@
 salt
 apache-libcloud
-salt-cloud
 M2Crypto
 pycrypto
 msgpack-python
