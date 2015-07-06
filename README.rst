@@ -96,6 +96,12 @@ Basic functionality
     # get all info about saltmaster
     sudo salt-cloud -c salt  -m salt/leads_saltmaster.map --query
 
+    # get all info about existing query engines
+    sudo salt-cloud -c salt  -m salt/leads_query-engine.map --query
+
+  
+   The *map* files define mappings between ucloud and VMs that should be spawn there. Without **--query**, salt-cloud will create VMs if they are missing from a target installation.
+
 - apply any changes from *salt/salt_master/master_config*
 
 Prepare salt-master
