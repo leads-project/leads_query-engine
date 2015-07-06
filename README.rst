@@ -101,6 +101,8 @@ Basic functionality
 
   The *map* files define mappings between ucloud and VMs that should be spawn there. Without **--query**, salt-cloud will create VMs if they are missing from a target installation.
   
+  Check *salt/cloud.profiles* to see how we have defined the VM profiles (image, security groups, ucloud).
+  
 - if the VMs are already there, you might want to have ssh_config to connect easily to them. Use the following command to generate it:
 
   ::
