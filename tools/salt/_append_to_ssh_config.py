@@ -11,6 +11,12 @@ def print_warn(instance_name, instance_dsc):
         instance_dsc)
 
 
+def print_warn_no_pub_ip(instance_name, instance_dsc):
+    print "[WARN] The instance {0} seems to not have public IP, salt-cloud returns: {1}".format(
+        instance_name,
+        instance_dsc)
+
+
 def append_to(target_file, lines):
     with open(target_file, 'a') as f:
         for l in lines:
@@ -31,13 +37,20 @@ for pr in y:
     for m in deployment:
         vm = deployment[m]
         if "public_ips" in vm:
-
-            lines.append("# VM @ {0}".format(pr))
-            lines.append("Host {0}".format(m))
-            lines.append("    # PrivateIP {0}".format(vm["private_ips"][0]))
-            lines.append("    HostName {0}".format(vm["public_ips"][0]))
-            lines.append("    User ubuntu")
-            lines.append("    IdentityFile {0}".format(identity_file))
+            if len(vm["public_ips"]) > 0:
+                lines.append("# VM @ {0}".format(pr))
+                lines.append("Host {0}".format(m))
+                lines.append("    # PrivateIP {0}".format(vm["private_ips"][0]))
+                lines.append("    HostName {0}".format(vm["public_ips"][0]))
+                lines.append("    User ubuntu")
+                lines.append("    IdentityFile {0}".format(identity_file))
+            else:
+                lines.append("# VM @ {0}".format(pr))
+                lines.append("# Host {0}".format(m))
+                lines.append("#    PrivateIP {0}".format(vm["private_ips"][0]))
+                lines.append("#    User ubuntu")
+                lines.append("#    IdentityFile {0}".format(identity_file))
+                print_warn_no_pub_ip(m, vm)
             lines.append("")
             lines.append("")
         else:
