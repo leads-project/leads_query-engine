@@ -45,11 +45,15 @@ for pr in y:
                 lines.append("    User ubuntu")
                 lines.append("    IdentityFile {0}".format(identity_file))
             else:
+                priv_ip = vm["private_ips"][0]
+                target_inst = pr[4:]
                 lines.append("# VM @ {0}".format(pr))
-                lines.append("# Host {0}".format(m))
-                lines.append("#    PrivateIP {0}".format(vm["private_ips"][0]))
-                lines.append("#    User ubuntu")
-                lines.append("#    IdentityFile {0}".format(identity_file))
+                lines.append("Host {0}".format(m))
+                lines.append("    # PrivateIP {0}".format(priv_ip))
+                lines.append("    ProxyCommand ssh forward@ssh.{0}.cloudandheat.com nc -q0 {1} 22".format(
+                        target_inst, priv_ip))
+                lines.append("    User ubuntu")
+                lines.append("    IdentityFile {0}".format(identity_file))
                 print_warn_no_pub_ip(m, vm)
             lines.append("")
             lines.append("")
