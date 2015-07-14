@@ -23,4 +23,10 @@ base:
     - monitoring.pcp
   'leads-saltmaster':
     - monitoring.vector
+  'leads-yarn-1':
+    - evaluation.ycsb_ispn
+  'leads-yarn-hamm6-1':
+    - evaluation.ycsb_ispn
+  'leads-yarn-dresden2-1':
+    - evaluation.ycsb_ispn
   
