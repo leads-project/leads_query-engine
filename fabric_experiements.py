@@ -32,7 +32,7 @@ def _upload_with_scp(what, where):
         local("scp -F {0} {1} {2}:{3}".format(env.ssh_config_path, what, env.host_string, where))
 
 
-def yscb_load_workloads_local():
+def ycsb_load_workloads_local():
     exp_time = time.strftime("%Y%m%d-%H%M%S")
     for wl in ["workloada", "workloadb"]:
         _exec_load(wl, exp_time)
@@ -49,7 +49,7 @@ def _exec_load(workload, result_file_postfix):
         result_file_name = "{0}-{1}-load-{2}.data".format(ispn_hn, workload, result_file_postfix)
 
         with hide('running', 'stdout', 'stderr'):
-            out = run("./bin/ycsb load infinispan -P workloads/{1} -p host={0} -threads 10 -s -p recordcount={3} | tee -a {2}".format( 
+            out = run("./bin/ycsb load infinispan -P workloads/{1} -p host={0} -threads 10 -s -p recordcount={3} 2>&1 | tee -a {2}".format( 
                       ispn_ip,
                       workload,
                       result_file_name,
@@ -63,10 +63,10 @@ def ycsb_run_workloads_local():
     exp_time = time.strftime("%Y%m%d-%H%M%S")
 
     for wl in ["workloada", "workloadb"]:
-        _exec_workload(wl, exp_time)
+        _run_workload(wl, exp_time)
 
 
-def _exec_workload(workload, result_file_postfix):
+def _run_workload(workload, result_file_postfix):
     with cd("/home/ubuntu/YCSB_PS"):
         ispn_ip = run("hostname -I")
         ispn_hn = run("hostname")
@@ -74,10 +74,10 @@ def _exec_workload(workload, result_file_postfix):
 
         result_file_name = "{0}-{1}-run-{2}.data".format(ispn_hn, workload, result_file_postfix)
         with hide('running', 'stdout', 'stderr'):
-            out = run("./bin/ycsb run infinispan -P workloads/{1} -p host={0} -threads 10 -s | tee -a {2}".format(
+            out = run("./bin/ycsb run infinispan -P workloads/{1} -p host={0} -threads 10 -s 2>&1 | tee -a {2}".format(
                       ispn_ip,
                       workload,
-                      result_file_name))
+                      result_file_name), combine_stderr=True)
             _print_results_to_console(out)
             pwd = run("pwd")
             _download_results_file(pwd, result_file_name)
