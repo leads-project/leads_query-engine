@@ -33,6 +33,7 @@ def _upload_with_scp(what, where):
 
 
 def ycsb_load_workloads_local():
+    local("mkdir -p evaluation/ycsb")
     exp_time = time.strftime("%Y%m%d-%H%M%S")
     for wl in ["workloada", "workloadb"]:
         _exec_load(wl, exp_time)
@@ -56,11 +57,12 @@ def _exec_load(workload, result_file_postfix):
                       YCSB_RECORDCOUNT))
             _print_results_to_console(out)
             pwd = run("pwd")
-            _download_results_file(pwd, result_file_name)
+            _download_results_file(pwd, result_file_name, "evaluation/ycsb")
 
 
 def ycsb_run_workloads_local():
     exp_time = time.strftime("%Y%m%d-%H%M%S")
+    local("mkdir -p evaluation/ycsb")
 
     for wl in ["workloada", "workloadb"]:
         _run_workload(wl, exp_time)
@@ -80,7 +82,7 @@ def _run_workload(workload, result_file_postfix):
                       result_file_name), combine_stderr=True)
             _print_results_to_console(out)
             pwd = run("pwd")
-            _download_results_file(pwd, result_file_name)
+            _download_results_file(pwd, result_file_name, "evaluation/ycsb")
 
 
 def _print_results_to_console(out):
@@ -93,10 +95,11 @@ def _print_results_to_console(out):
         line_num = line_num + 1
 
 
-def _download_results_file(r_dir, result_file):
+def _download_results_file(r_dir, result_file, local_dir):
     with hide('running', 'stdout'):
-        local("scp -F {0} {1}:{2}/{3} {3}".format(
+        local("scp -F {0} {1}:{2}/{4} {3}/{4}".format(
             env.ssh_config_path,
             env.host_string,
             r_dir,
+            local_dir,
             result_file))
