@@ -508,10 +508,36 @@ Example:
       done;
   done;
 
-Testing ISPN/Assemble
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Evaluating ISPN/Assemble with YCSB
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You have salt state available to install YCSB: *evaluation/ycsb_ispn*.
+1. Prepare YCSB
+
+   - Clone https://github.com/otrack/Leads-infinispan.git, run *mvn install -Dskip.tests* to have necessary libraries in your local maven cache
+    
+   - Get https://github.com/otrack/YCSB.git, run *mvn package  -Dskip.tests* and archive the YCSB directory to *YCSB_PS.tar.gz*
+     
+   - copy *YCSB_PS.tar.gz* to *leads_query-engine* directory
+
+2. Install on the nodes:
+   
+   ::
+
+     fab -Hleads-qe1,leads-qe2 ycsb_install \
+         --ssh-config-path=ssh_config -f fabric_experiements.py -P
+
+3. Run experiments (The results are stored in *evaluation/ycsb*):
+  
+   ::
+   
+     fab -Hleads-qe1,leads-qe2 ycsb_load_workloads_local \
+         --ssh-config-path=ssh_config -f fabric_experiements.py -P
+
+   ::
+
+     fab -Hleads-qe1,leads-qe2 ycsb_run_workloads_local \
+         --ssh-config-path=ssh_config -f fabric_experiements.py -P
+
 
 Useful info
 ==================
