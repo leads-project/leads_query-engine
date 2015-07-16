@@ -13,18 +13,26 @@ env.use_ssh_config = True
 
 
 YCSB_BINARY = "YCSB_PS.tar.gz"
+YCSB_DIR = YCSB_BINARY[:7]
+REMOTE_FILE = "/home/ubuntu/{0}".format(YCSB_BINARY)
 
 
 def ycsb_install():
-    remote_file = "/home/ubuntu/{0}".format(YCSB_BINARY)
-    if not exists(remote_file):
+    if not exists(REMOTE_FILE):
         utils.puts("Uploading {0}".format(YCSB_BINARY))
-        _upload_with_scp(YCSB_BINARY, remote_file)
+        _upload_with_scp(YCSB_BINARY, REMOTE_FILE)
     else:
         utils.puts("{0} is already on the host".format(YCSB_BINARY))
 
-    if not exists("YCSB_PS"):
-        run("tar -xzf YCSB_PS.tar.gz")
+    if not exists(YCSB_DIR):
+        run("tar -xzf {0}".format(YCSB_BINARY))
+
+
+def ycsb_remove():
+    if exists(REMOTE_FILE):
+        run("rm -f {0}".format(REMOTE_FILE))
+    if exists(YCSB_DIR):
+        run("rm -rf {0}".format(YCSB_DIR))
 
 
 def _upload_with_scp(what, where):
