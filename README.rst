@@ -508,7 +508,7 @@ Example:
       done;
   done;
 
-Evaluating ISPN/Assemble with YCSB
+Evaluating ISPN/Ensemble with YCSB
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Prepare YCSB
