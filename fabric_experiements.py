@@ -58,7 +58,7 @@ def _exec_load(workload, result_file_postfix):
         result_file_name = "{0}-{1}-load-{2}.data".format(ispn_hn, workload, result_file_postfix)
 
         with hide('running', 'stdout', 'stderr'):
-            out = run("./bin/ycsb load infinispan -P workloads/{1} -p host={0} -threads 10 -s -p recordcount={3} 2>&1 | tee -a {2}".format( 
+            out = run("LEADS_YCSB_CACHE_NAME=clustered ./bin/ycsb load infinispan -P workloads/{1} -p host={0} -threads 10 -s -p recordcount={3} 2>&1 | tee -a {2}".format( 
                       ispn_ip,
                       workload,
                       result_file_name,
@@ -84,7 +84,7 @@ def _run_workload(workload, result_file_postfix):
 
         result_file_name = "{0}-{1}-run-{2}.data".format(ispn_hn, workload, result_file_postfix)
         with hide('running', 'stdout', 'stderr'):
-            out = run("./bin/ycsb run infinispan -P workloads/{1} -p host={0} -threads 10 -s 2>&1 | tee -a {2}".format(
+            out = run("LEADS_YCSB_CACHE_NAME=clustered ./bin/ycsb run infinispan -P workloads/{1} -p host={0} -threads 10 -s 2>&1 | tee -a {2}".format(
                       ispn_ip,
                       workload,
                       result_file_name), combine_stderr=True)
