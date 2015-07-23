@@ -10,7 +10,7 @@ base:
     - ucloud.hamm5 
   'leads-qe2':
     - ucloud.hamm6
-  'leads-qe13':
+  'leads-qe1[23]':
     - ucloud.hamm6
   'leads-qe3':
     - ucloud.dresden2
