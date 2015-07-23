@@ -1,5 +1,5 @@
 base:
-  'leads-qe[12345]':
+  'leads-qe*':
     - leads.packages
     - leads.adidas_plugin_deps
     - leads.java
@@ -14,19 +14,14 @@ base:
     - leads.yarn
   'leads-yarn-hamm6-1':
     - leads.unicrawl
+    # - evaluation.ycsb_ispn
   'leads-yarn-dresden2-*':
     - leads.java
     - leads.yarn
   'leads-yarn-dresden2-1':
     - leads.unicrawl
+    # - evaluation.ycsb_ispn
   '*':
     - monitoring.pcp
   'leads-saltmaster':
     - monitoring.vector
-  'leads-yarn-1':
-    - evaluation.ycsb_ispn
-  'leads-yarn-hamm6-1':
-    - evaluation.ycsb_ispn
-  'leads-yarn-dresden2-1':
-    - evaluation.ycsb_ispn
-  

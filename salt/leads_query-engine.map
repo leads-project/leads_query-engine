@@ -1,5 +1,8 @@
 ubuntu_large_hamm5:        
     - leads-qe1
+    - leads-qe16
+    - leads-qe17
+    - leads-qe18
 
 ubuntu_large_hamm6:
     - leads-qe2
@@ -15,6 +18,8 @@ ubuntu_large_dresden2:
 
 ubuntu_large_dd1a:
     - leads-qe8
+    - leads-qe14
+    - leads-qe15
 
 vertx_ready_dd1a:
     - leads-qe9
