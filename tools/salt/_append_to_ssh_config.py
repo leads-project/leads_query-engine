@@ -36,8 +36,6 @@ for pr in y:
     deployment = y[pr]['openstack']
     for m in deployment:
         vm = deployment[m]
-        print vm
-        print m
         if vm == 'Absent':
                 lines.append("# VM @ {0}".format(pr))
                 lines.append("# Host {0}".format(m))
