@@ -1,5 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 import os
+import stat
 
 config_dir = "salt/cloud.providers.d"
 env = Environment(loader=FileSystemLoader(config_dir))
@@ -10,5 +11,5 @@ for f in os.listdir(config_dir):
         if f_ext == ".template":
             target_name = f_name.replace("_", ".")
             template = env.get_template(f)
-            with open(config_dir + "/" + target_name, "w") as f:
+            with open(target_file, "w") as f:
                 f.write(template.render(env=os.environ))

@@ -12,9 +12,15 @@ base:
     - ucloud.hamm6
   'leads-qe1[23]':
     - ucloud.hamm6
-  'leads-qe3':
+  'leads-qe[3467]':
+    - ucloud.dresden2
+  'leads-qe19':
+    - ucloud.dresden2
+  'leads-qe2[01]':
     - ucloud.dresden2
   'leads-qe1[45]':
+    - ucloud.dd1a
+  'leads-qe2[234567]':
     - ucloud.dd1a
   'leads-yarn-hamm6-*':
     - ucloud.hamm6
