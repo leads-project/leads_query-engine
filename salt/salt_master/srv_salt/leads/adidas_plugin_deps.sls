@@ -108,8 +108,8 @@ https://github.com/pskorupinski/LeadsAdidasPluginSources:
     file.append:
         - text:
             - LEADS_ADIDAS_RESOURCES=/home/ubuntu/.adidas/resources
-            - LEADS_ADIDAS_PROPERTIES=/home/ubuntu/.adidas/leads-query-processor/properties
-            - LEADS_ADIDAS_PYTHON=/home/ubuntu/.adidas/leads-query-processor/python
+            - LEADS_ADIDAS_PROPERTIES=/home/ubuntu/.adidas/LeadsAdidasPluginSources/properties
+            - LEADS_ADIDAS_PYTHON=/home/ubuntu/.adidas/LeadsAdidasPluginSources/python
             - LEADS_ADIDAS_LOGS=/home/ubuntu/.adidas/logs
         - require: 
             - git: https://github.com/pskorupinski/LeadsAdidasPluginSources
