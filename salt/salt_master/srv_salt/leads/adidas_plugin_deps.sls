@@ -87,8 +87,7 @@ ldconfig:
         - cwd: /home/ubuntu/.adidas
         - user: ubuntu
         - names:
-            - wget -O resources.tar.gz  https://object-hamm5.cloudandheat.com:8080/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/adidas/adidas-processing-plugin-resources.tar.gz\?temp_url_sig\=5a9cdaca746807a1f7f9b30e230d226de9e74b42\&temp_url_expires\=1464590665
-            - tar -xzf resources.tar.gz
+            - wget -O resources.tar.gz  https://object-hamm5.cloudandheat.com:8080/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/adidas/adidas-processing-plugin-resources.tar.gz\?temp_url_sig\=5a9cdaca746807a1f7f9b30e230d226de9e74b42\&temp_url_expires\=1464590665 && tar -xzf resources.tar.gz
         - require:
             - file: /home/ubuntu/.adidas
 
