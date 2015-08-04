@@ -95,9 +95,11 @@ TARGET_SWIFT_OBJECT_SWIFT=/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/unicrawl/nut
 TARGET_SWIFT_OBJECT_ISPN=/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/infinispan/infinispan-server-7.0.1-SNAPSHOT-NEW.tgz
 
 TARGET_SWIFT_ENDPOINT=https://object-hamm5.cloudandheat.com:8080
+# adidas objects
+TARGET_SWIFT_OBJECT_PROCESSING_RESOURCE=/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/adidas/adidas-processing-plugin-resources.tar.gz
 
 # default value 30 days
-TARGET_SWIFT_VALIDITY_OF_TEMPURL_SEC=24*60*60*30
+TARGET_SWIFT_VALIDITY_OF_TEMPURL_SEC=24*60*60*30*10
 
 get_swift_tempurl_unicrawl_archive: 
 	$(MAKE) get_swift_tempurl TARGET_SWIFT_OBJECT=$(TARGET_SWIFT_OBJECT_SWIFT)
@@ -111,6 +113,9 @@ get_swift_tempurl:
 
 get_swift_tempurl_ispn_archive:
 	$(MAKE) get_swift_tempurl TARGET_SWIFT_OBJECT=$(TARGET_SWIFT_OBJECT_ISPN)
+
+get_swift_tempurl_resources_resources:
+	$(MAKE) get_swift_tempurl TARGET_SWIFT_OBJECT=$(TARGET_SWIFT_OBJECT_PROCESSING_RESOURCE)	
 
 
 
