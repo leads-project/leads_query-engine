@@ -124,7 +124,7 @@ https://github.com/pskorupinski/LeadsAdidasPluginSources:
     - mode: 644
     - template: jinja
     - defaults:
-        leads_adidas_python: /home/ubuntu/.adidas/leads-query-processor/nqe/system-plugins/adidas-processing-plugin/src/main/python/
+        leads_adidas_python: /home/ubuntu/.adidas/LeadsAdidasPluginSources/python
         leads_adidas_infext_listen_ip: 127.0.0.1
         leads_adidas_infext_port: 5559
 
@@ -145,7 +145,7 @@ leads-infextraction-1:
     - mode: 644
     - template: jinja
     - defaults:
-        leads_adidas_python: /home/ubuntu/.adidas/leads-query-processor/nqe/system-plugins/adidas-processing-plugin/src/main/python/
+        leads_adidas_python: /home/ubuntu/.adidas/LeadsAdidasPluginSources/python
         leads_adidas_infext_listen_ip: 127.0.0.1
         leads_adidas_infext_port: 6000
 
