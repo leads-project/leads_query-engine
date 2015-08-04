@@ -86,7 +86,7 @@ ldconfig:
     cmd.run:
         - cwd: /home/ubuntu/.adidas
         - user: ubuntu
-        - name: wget -O adidas-processing-plugin-resources.tar.gz  https://object-hamm5.cloudandheat.com:8080/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/adidas/adidas-processing-plugin-resources.tar.gz?temp_url_sig=5a9cdaca746807a1f7f9b30e230d226de9e74b42&temp_url_expires=1464590665
+        - name: wget -O resources.tar.gz  https://object-hamm5.cloudandheat.com:8080/v1/AUTH_73e8d4d1688f4e1f86926d4cb897091f/adidas/adidas-processing-plugin-resources.tar.gz\?temp_url_sig\=5a9cdaca746807a1f7f9b30e230d226de9e74b42\&temp_url_expires\=1464590665
         - require:
             - file: /home/ubuntu/.adidas
 
@@ -94,7 +94,7 @@ ldconfig:
     archive:
         - extracted
         - name: /home/ubuntu/.adidas/
-        - source: /home/ubuntu/.adidas/adidas-processing-plugin-resources.tar.gz
+        - source: /home/ubuntu/.adidas/esources.tar.gz
         - source_hash: sha256=f016a91d010efac36aebb667d45a7ee4e7251690d9692ae2520c00b244077b9d
         - tar_options: z
         - archive_format: tar
