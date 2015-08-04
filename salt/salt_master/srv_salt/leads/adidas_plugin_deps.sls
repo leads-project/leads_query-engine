@@ -67,6 +67,7 @@ Building jzmq:
           - sudo bash -c "./autogen.sh ; ./configure;  make ; make install"
         - require:
           - git: https://github.com/zeromq/jzmq.git
+        - if_missing: /usr/local/lib/libjzmq.a
 
 ldconfig:
     cmd.run:
