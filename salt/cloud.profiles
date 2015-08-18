@@ -67,8 +67,8 @@ vertx_ready_dd1a:
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
 
-ubuntu_medium_dd1c:
-    provider: cah-dd1c
+ubuntu_medium_dd2c:
+    provider: cah-dd2c
     ssh_username: ubuntu
     size: cloudcompute.m
     image: Ubuntu 14.04 LTS x64
@@ -76,8 +76,8 @@ ubuntu_medium_dd1c:
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
 
-ubuntu_large_dd1c:
-    provider: cah-dd1c
+ubuntu_large_dd2c:
+    provider: cah-dd2c
     ssh_username: ubuntu
     size: cloudcompute.l
     image: Ubuntu 14.04 LTS x64
