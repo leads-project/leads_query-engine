@@ -1,4 +1,4 @@
-cah-dd1c:
+cah-dd2c:
   # Set the location of the salt-master
   #
   minion:
@@ -6,7 +6,7 @@ cah-dd1c:
 
   # Configure the OpenStack driver
   #
-  identity_url: https://identity-dd1c.cloudandheat.com:5000/v2.0/tokens
+  identity_url: https://identity-dd2c.cloudandheat.com:5000/v2.0/tokens
   compute_name: nova
   protocol: ipv4
 
