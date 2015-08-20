@@ -1,14 +1,14 @@
-ubuntu_large_hamm5:        
-    - leads-qe1
-    - leads-qe16
-    - leads-qe17
-    - leads-qe18
+# ubuntu_large_hamm5:        
+#    - leads-qe1
+#    - leads-qe16
+#    - leads-qe17
+#    - leads-qe18
 
-ubuntu_large_hamm6:
-    - leads-qe2
-    - leads-qe5
-    - leads-qe12
-    - leads-qe13
+# ubuntu_large_hamm6:
+#    - leads-qe2
+#    - leads-qe5
+#    - leads-qe12
+#    - leads-qe13
 
 ubuntu_large_dresden2:
     - leads-qe3
