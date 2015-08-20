@@ -28,3 +28,7 @@ base:
     - ucloud.hamm5
   'leads-yarn-dresden2-*':
     - ucloud.dresden2
+  'leads-qe3[0-6]':
+    - ucloud.dd2c
+  'leads-qe2[8-9]':
+    - ucloud.dd2c
