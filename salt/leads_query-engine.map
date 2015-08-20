@@ -33,3 +33,13 @@ ubuntu_large_dd1a:
 vertx_ready_dd1a:
     - leads-qe9
 
+ubuntu_large_dd2c:                                                                                          
+    - leads-qe28                                                                                           
+    - leads-qe29
+    - leads-qe30
+    - leads-qe31
+    - leads-qe32
+    - leads-qe33
+    - leads-qe34
+    - leads-qe35
+    - leads-qe36
