@@ -13,7 +13,7 @@
    - user: ubuntu
    - group: ubuntu
    - source: https://raw.githubusercontent.com/skarab7/leads_query-engine/develop/tools/openstack_cli/requirements.txt
-   - source_hash: sha256=6fc23071422e11e2c5096e76a52ac91a7fe8688e6650cdeae3118a314cc7cb15  
+   - source_hash: sha256=3621a2b13ecb406cf400aeb13851ee1b4b7a1c8dffbcd9d8a521e71d4ec84334  
    - mode: 644 
 
 Execute setup_leads:
