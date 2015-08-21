@@ -14,7 +14,7 @@ backup_pcp_mtime_value = "-3"
 
 def install_metrics_backup_script():
 
-    run("sudo apt-get install python-virtualenv python-pip python-dev -qq")
+    run("sudo apt-get install python-virtualenv python-pip python-dev libffi-dev libssl-dev -qq")
     run("mkdir -p {0}".format(backup_tool_dir))
 
     for f in ["requirements.txt", "copy_pcp_to_swift.sh",
@@ -30,7 +30,7 @@ def _prepare_virtualenv(backup_dir):
     with cd(backup_dir):
         cmd = ["virtualenv openstack_cli",
                "source openstack_cli/bin/activate",
-               "pip install -r requirements.txt"]
+               "pip install -U -r requirements.txt"]
 
         run(";".join(cmd))
 
@@ -41,7 +41,7 @@ def _upload_with_scp(what, where):
 
 
 def run_pcp_backup_script():
-    backup_cmd = "bash copy_pcp_to_swift.sh"
+    backup_cmd = "./copy_pcp_to_swift.sh"
     _execute_swift_backup_cmd(backup_cmd)
 
 
@@ -59,7 +59,8 @@ def _execute_swift_backup_cmd(cmd):
                    OS_AUTH_URL=container_url,
                    PCP_FILES_MTIME=backup_pcp_mtime_value):
         with cd(backup_tool_dir):
-            run("{0} ; {1}".format(prefix, cmd))
+            run("chmod +x {0}".format(cmd))
+            run("bash -c '{0} ; {1}'".format(prefix, cmd))
 
 
 def install_tcpflow():
@@ -82,5 +83,5 @@ def stop_tcpflow():
 def run_tcpflow_backup():
     """
     """
-    backup_cmd = "bash copy_tcpflow_to_swift.sh"
+    backup_cmd = "copy_tcpflow_to_swift.sh"
     _execute_swift_backup_cmd(backup_cmd)
