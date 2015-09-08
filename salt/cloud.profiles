@@ -75,6 +75,7 @@ ubuntu_medium_dd2c:
     private_networking: False
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
+    script_args: -P  # https://github.com/saltstack/salt-bootstrap/issues/604#issuecomment-122250472
 
 ubuntu_large_dd2c:
     provider: cah-dd2c
@@ -84,6 +85,7 @@ ubuntu_large_dd2c:
     private_networking: False
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
+    script_args: -P  # https://github.com/saltstack/salt-bootstrap/issues/604#issuecomment-122250472
 
 ubuntu_medium_dd2a:
     provider: cah-dd2a
@@ -93,6 +95,7 @@ ubuntu_medium_dd2a:
     private_networking: False
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
+    script_args: -P  # https://github.com/saltstack/salt-bootstrap/issues/604#issuecomment-122250472
 
 ubuntu_large_dd2a:
     provider: cah-dd2a
@@ -102,5 +105,4 @@ ubuntu_large_dd2a:
     private_networking: False
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
-
-
+    script_args: -P  # https://github.com/saltstack/salt-bootstrap/issues/604#issuecomment-122250472
