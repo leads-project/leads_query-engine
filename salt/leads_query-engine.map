@@ -1,15 +1,3 @@
-# ubuntu_large_hamm5:        
-#    - leads-qe1
-#    - leads-qe16
-#    - leads-qe17
-#    - leads-qe18
-
-# ubuntu_large_hamm6:
-#    - leads-qe2
-#    - leads-qe5
-#    - leads-qe12
-#    - leads-qe13
-
 ubuntu_large_dresden2:
     - leads-qe3
     - leads-qe4
@@ -33,8 +21,8 @@ ubuntu_large_dd1a:
 vertx_ready_dd1a:
     - leads-qe9
 
-ubuntu_large_dd2c:                                                                                          
-    - leads-qe28                                                                                           
+ubuntu_large_dd2c:
+    - leads-qe28
     - leads-qe29
     - leads-qe30
     - leads-qe31
@@ -44,3 +32,15 @@ ubuntu_large_dd2c:
     - leads-qe35
     - leads-qe36
     - leads-qe37
+
+ubuntu_large_dd2a:
+    - leads-qe38
+    - leads-qe39
+    - leads-qe40
+    - leads-qe41
+    - leads-qe42
+    - leads-qe43
+    - leads-qe44
+    - leads-qe45
+    - leads-qe46
+    - leads-qe47
