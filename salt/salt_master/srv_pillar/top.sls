@@ -4,14 +4,6 @@ base:
     - leads.ycsb
   'leads-qe*':
     - leads.openstack
-  'leads-qe1':
-    - ucloud.hamm5 
-  'leads-qe1[678]':
-    - ucloud.hamm5 
-  'leads-qe2':
-    - ucloud.hamm6
-  'leads-qe1[23]':
-    - ucloud.hamm6
   'leads-qe[3467]':
     - ucloud.dresden2
   'leads-qe19':
