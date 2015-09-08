@@ -26,5 +26,5 @@ base:
     - ucloud.dd2c
   'leads-qe4[0-7]':
     - ucloud.dd2a
-   'leads-qe3[8-9]'
+  'leads-qe3[8-9]':
     - ucloud.dd2a
