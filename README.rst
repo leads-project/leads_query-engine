@@ -446,7 +446,11 @@ Backup pcp metrics to swift container
 Network monitoring
 -----------------------
 
-For network monitoring and tcpflow analysis, we deploy tcpflow. We use fabric script to manage tcpflow. Notice: tcpflow archives grow pretty fast. We capture all incomming and outgoing traffic.
+For network monitoring and tcpflow analysis, we deploy tcpflow. We use fabric script to manage tcpflow. 
+
+**Notice**: tcpflow archives grow pretty fast. The tool capture all incoming and outgoing traffic.
+
+**Notice**: You should start tcpflow before any connections, you want to capture, is established. You should close all the captures connections after the experiment. Otherwise, tcpflow might not provide accurate measurements. tcpflow stores captured data in a file when a connection is closed.
 
 1. Install:
    
