@@ -450,7 +450,7 @@ For network monitoring and tcpflow analysis, we deploy tcpflow. We use fabric sc
 
 **Notice**: tcpflow archives grow pretty fast. The tool capture all incoming and outgoing traffic.
 
-**Notice**: You should start tcpflow before any connections, you want to capture, is established. You should close all the captures connections after the experiment. Otherwise, tcpflow might not provide accurate measurements. tcpflow stores captured data in a file when a connection is closed.
+**Notice**: You should start tcpflow before any connection, you want to capture, is established. You should close all the captures connections after the experiment. Otherwise, tcpflow might not provide accurate measurements. tcpflow stores captured data in a file when a connection is closed.
 
 1. Install:
    
