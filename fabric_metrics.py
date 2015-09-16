@@ -6,7 +6,7 @@ env.forward_agent = True
 env.use_ssh_config = True
 
 backup_tool_dir = "/home/ubuntu/metrics/backup"
-tcpflow_output_dir = "/home/ubuntu/metrics/tcpflow"
+tcpflow_output_dir = "/home/ubuntu/metrics/tcpflow/final_experiment_NUMBER"
 
 # use -1, -2, empty - means the default value -1 is used
 backup_pcp_mtime_value = "-3"
@@ -83,5 +83,5 @@ def stop_tcpflow():
 def run_tcpflow_backup():
     """
     """
-    backup_cmd = "copy_tcpflow_to_swift.sh"
+    backup_cmd = "./copy_tcpflow_to_swift.sh"
     _execute_swift_backup_cmd(backup_cmd)
