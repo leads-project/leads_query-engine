@@ -67,6 +67,15 @@ vertx_ready_dd1a:
     ssh_key_name: leads_cluster
     security_groups: default,global_saltstack
 
+influxdb_dd1a:
+    provider: cah-dd1a
+    ssh_username: ubuntu
+    image: Ubuntu 14.04 LTS x64
+    private_networking: False
+    ssh_key_name: leads_cluster
+    security_groups: default,global_saltstack,influx
+    script_args: -P  #
+
 ubuntu_medium_dd2c:
     provider: cah-dd2c
     ssh_username: ubuntu
